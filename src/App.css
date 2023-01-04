@@ -36,3 +36,44 @@
     transform: rotate(360deg);
   }
 }
+
+.Main .DisplayList {
+  border: 2px solid black;
+}
+
+.Main .main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Main .secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.MainDisplay, .SecondaryDisplay {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.MainDisplay .Clock {
+  height: 200px;
+  width: 200px;
+  background-color: #282c34;
+  border-radius: 999px;
+}
+
+.SecondaryDisplay .Clock {
+  height: 70px;
+  width: 70px;
+  background-color: #282c34;
+  border-radius: 999px;
+}
