@@ -1,5 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
+  height: 100vh;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -37,6 +44,10 @@
   }
 }
 
+.Main {
+  flex: 2 1 auto;
+}
+
 .Main .DisplayList {
   border: 2px solid black;
 }
@@ -64,16 +75,57 @@ footer {
   text-transform: uppercase;
 }
 
+/* Clock UI */
+
+.Clock {
+  position: relative;
+  background-color: white;
+  border: solid 2px black;
+  border-radius: 999px;
+}
+
 .MainDisplay .Clock {
   height: 200px;
   width: 200px;
-  background-color: #282c34;
-  border-radius: 999px;
+
 }
 
 .SecondaryDisplay .Clock {
   height: 70px;
   width: 70px;
-  background-color: #282c34;
+}
+
+.center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Clock .pivot {
+  height: 7px;
+  width: 7px;
+  background-color: white;
   border-radius: 999px;
+  border: solid 2px black;
+}
+
+.Clock .ClockHand div {
+  background-color: black;
+  height: 50%;
+}
+
+.Clock .ClockHand div:last-child {
+  /* Change to white when rotation is working */
+  background-color: lightblue;
+}
+
+.Clock .hour{
+  width: 2%;
+  height: 40%;
+}
+
+.Clock .minute {
+  width: 1%;
+  height: 80%;
 }
