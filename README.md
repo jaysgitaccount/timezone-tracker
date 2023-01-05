@@ -8,3 +8,4 @@ My goals for this project:
 - Learn how to build a working analog clock interface for web
 - Practice clean and modular code, using composition
 - Maybe learn a bit more about how timezones work
+- Practice the 'Thinking in React' steps to approach making a React app
