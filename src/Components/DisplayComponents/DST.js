@@ -1,7 +1,7 @@
 function DST(props) {
     return (
-        <div>
-            Daylight Saving Time {props.dst ? '' : 'in'}active
+        <div className={`DST ${props.dst && 'active'}`}>
+            DST
         </div>
     )
 }

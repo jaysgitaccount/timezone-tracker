@@ -94,6 +94,22 @@ footer {
   line-height: 0px;
 }
 
+.Display .DST {
+  padding: 3px;
+  border-radius: 2px;
+  background-color: rgb(180, 180, 180);
+  border: solid 1px rgb(73, 73, 73);
+  color: rgb(73, 73, 73);
+}
+
+.Display .DST.active {
+  padding: 3px;
+  border-radius: 2px;
+  background-color: green;
+  border: solid 1px rgb(120, 255, 120);
+  color: rgb(120, 255, 120);
+}
+
 /* Clock UI */
 
 .Clock {
