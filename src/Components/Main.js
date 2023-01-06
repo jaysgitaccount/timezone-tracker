@@ -1,28 +1,29 @@
-import MainDisplay from "./DisplayComponents/MainDisplay";
-import SecondaryDisplay from "./DisplayComponents/SecondaryDisplay";
+import Display from "./DisplayComponents/Display";
+
 
 function Main() {
     return (
         <div className="Main">
-            <div className="DisplayList">
+            <section className="DisplayList">
             <h2>Main</h2>
-                <div class="main">
-                    <MainDisplay />
+                <div className="main">
+                    <Display />
                     <div>vs</div>
-                    <MainDisplay />
+                    <Display />
                 </div>
-            </div>
-            <div className="DisplayList">
-                <div class="secondary">
-                    <SecondaryDisplay />
-                    <SecondaryDisplay />
-                    <SecondaryDisplay />
-                    <SecondaryDisplay />
-                    <SecondaryDisplay />
-                    <SecondaryDisplay />
-                    <SecondaryDisplay />
+            </section>
+            <section className="DisplayList">
+                <h2>Secondary</h2>
+                <div className="secondary">
+                    <Display />
+                    <Display />
+                    <Display />
+                    <Display />
+                    <Display />
+                    <Display />
+                    <Display />
                 </div>
-            </div>
+            </section>
         </div>
     )
 }
