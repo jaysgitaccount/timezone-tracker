@@ -2,29 +2,26 @@ import Display from "./DisplayComponents/Display";
 
 
 function Main() {
+    // Iterate through this to create displays with stored info
+    const displayArray = [
+        'Australia/Sydney'
+    ];
+    
+    function populateList() {
+        // For example
+        displayArray.map(location => 
+            <Display key={location} location={location} />    
+        )
+    }
+
     return (
-        <div className="Main">
-            <section className="DisplayList">
-            <h2>Main</h2>
-                <div className="main">
-                    <Display />
-                    <div>vs</div>
-                    <Display />
-                </div>
-            </section>
-            <section className="DisplayList">
-                <h2>Secondary</h2>
-                <div className="secondary">
-                    <Display />
-                    <Display />
-                    <Display />
-                    <Display />
-                    <Display />
-                    <Display />
-                    <Display />
-                </div>
-            </section>
-        </div>
+        <section className="Main">
+            <h2>Timezones</h2>
+            <div className="DisplayList">
+                <Display />
+                <Display />
+            </div>
+        </section>
     )
 }
 

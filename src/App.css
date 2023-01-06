@@ -54,15 +54,6 @@ h1, h2, h3 {
 
 .Main .DisplayList {
   border: 2px solid black;
-}
-
-.Main .main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.Main .secondary {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 1.5rem;
@@ -76,18 +67,32 @@ footer {
 /* Display UI */
 
 .Display {
+  position: relative;
   border: 1px solid red;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin: 1rem;
+  padding: 1.5rem;
 }
 
 .Display>div {
-  border: solid 2px red;
+  border: solid 1px blue;
 }
 
-
+.Display .delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 0px;
+}
 
 /* Clock UI */
 

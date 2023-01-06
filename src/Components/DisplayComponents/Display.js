@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import Clock from "./Clock";
 import DigitalTime from "./DigitalTime";
 import CurrentDate from "./CurrentDate";
@@ -5,6 +6,7 @@ import Timezone from "./Timezone"
 import DST from "./DST";
 import TimezoneAbbr from "./TimezoneAbbr"
 import UTCOffset from "./UTCOffset"
+import DeleteButton from "./DeleteButton";
 
 let sampleData = {
     "abbreviation": "AEDT",
@@ -25,27 +27,55 @@ let sampleData = {
   }
 
 function Display(props) {
-    let data = sampleData;
+    const [isChanged, setIsChanged] = useState(false);
 
-    let date = data.datetime.substring(0, 10)
-    let time = data.datetime.substring(11, 19);
-    let timezone = data.timezone;
-    let dst = data.dst;
-    let abbr = data.abbreviation;
-    let utc = data.utc_offset;
+    function handleChange() {
+        setIsChanged(true);
+    }
+
+    function showInitialDisplay() {
+        return (
+            <article className="Display">
+                <label htmlFor="timezone-select">Select timezone:</label>
+                <select name="timezone-select" id="timezone-select" onChange={handleChange}>
+                    <option value=""></option>
+                    <option value="Australia/Sydney">Australia/Sydney</option>
+                </select>
+            </article>
+        )
+    }
+
+    function populateDisplay(object) {
+
+        let data = sampleData;
+
+        let date = data.datetime.substring(0, 10)
+        let time = data.datetime.substring(11, 19);
+        let timezone = data.timezone;
+        let dst = data.dst;
+        let abbr = data.abbreviation;
+        let utc = data.utc_offset;
+
+        return (
+            <article className="Display">
+                <DeleteButton />
+                <Timezone timezone={timezone}/>
+                <div>
+                    <TimezoneAbbr abbr={abbr} />
+                    <UTCOffset utc={utc} />
+                </div>
+                <CurrentDate date={date}/>
+                <Clock time={time}/>
+                <DigitalTime time={time}/>
+                <DST dst={dst}/>
+            </article>
+        )
+    }
 
     return (
-        <article className="Display">
-            <Timezone timezone={timezone}/>
-            <div>
-                <TimezoneAbbr abbr={abbr} />
-                <UTCOffset utc={utc} />
-            </div>
-            <CurrentDate date={date}/>
-            <Clock time={time}/>
-            <DigitalTime time={time}/>
-            <DST dst={dst}/>
-        </article>
+        <div>
+            {isChanged ? populateDisplay(sampleData) : showInitialDisplay()}
+        </div>
     )
 }
 
