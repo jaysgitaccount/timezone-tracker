@@ -1,11 +1,6 @@
 function DeleteButton(props) {
-    function handleClick(e) {
-        // Trigger delete display
-        console.log('delete');
-    }
-
     return (
-        <button className="delete" onClick={handleClick}><b>X</b></button>
+        <button className="delete" onClick={props.onClick}><b>X</b></button>
     )
 }
 
