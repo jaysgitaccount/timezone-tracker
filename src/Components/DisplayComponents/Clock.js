@@ -1,11 +1,9 @@
 import ClockHand from "./ClockHand";
 
 function Clock(props) {
-    // let time = props.datetime;
-    console.log('CLOCK')
-    console.log(props)
+    let time = props.time;
 
-    let time = '16:27:38';
+    //let time = '16:27:38';
 
     let [hour, minute, second] = time.split(':');
 
