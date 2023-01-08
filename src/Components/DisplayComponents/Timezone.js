@@ -1,5 +1,6 @@
 function Timezone(props) {
-    let [country, city] = props.timezone.split('/');
+    let formattedString = props.timezone.replaceAll('_', ' ');
+    let [country, city] = formattedString.split('/');
 
     return (
         <h3>
