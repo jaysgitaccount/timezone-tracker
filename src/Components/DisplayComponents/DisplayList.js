@@ -1,6 +1,6 @@
 import Display from "./Display";
 import AddDisplay from "./AddDisplay";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Need to find a way to generate ID dynamically
 const initialState = [
@@ -11,7 +11,15 @@ const initialState = [
 ]
 
 function DisplayList(props) {
-    const [timezones, setTimezones] = useState(initialState);
+    const [timezones, setTimezones] = useState([]);
+    const [allTimezones, setAllTimezones] = useState([]);
+
+    useEffect(() => {
+        fetch('http://worldtimeapi.org/api/timezone/').then(
+            result => result.json()
+        ).then(
+            resultJSON => setAllTimezones(resultJSON)
+    )}, []);
 
     function handleAdd(timezone) {
         if (timezone !== '') {
@@ -24,7 +32,6 @@ function DisplayList(props) {
     }
     
     function handleDelete(id) {
-        console.log('DELETE ' + id)
         let newArray = timezones.filter(item =>
             item.id !== id
         )
@@ -41,7 +48,7 @@ function DisplayList(props) {
                     handleDelete={handleDelete} />
                 }
             )}
-            <AddDisplay handleAdd={handleAdd} />
+            <AddDisplay handleAdd={handleAdd} timezones={allTimezones} />
         </div>
     )
 }

@@ -1,6 +1,4 @@
 function AddDisplay(props) {
-    // Fetch list of timezones
-    // Add timezones as <option>s
     function handleChange(e) {
         props.handleAdd(e.target.value);
     }
@@ -14,7 +12,11 @@ function AddDisplay(props) {
                 <option value="America/Mexico_City">America/Mexico_City</option>
                 <option value="Asia/Tokyo">Asia/Tokyo</option>
                 <option value="Europe/Madrid">Europe/Madrid</option>
-
+                {
+                    props.timezones.map( (item, index) =>
+                        <option key={`${item}${index}`} value={item}>{item}</option>
+                    )
+                }
             </select>
         </div>
     )
