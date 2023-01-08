@@ -22,7 +22,6 @@ function extractStrings(timeState) {
 
 function Display(props) {
     let url = `http://worldtimeapi.org/api/timezone/${props.timezone}`
-    let timerID;
 
     const [data, setData] = useState({});
     const [currentTime, setCurrentTime] = useState('');
@@ -47,20 +46,14 @@ function Display(props) {
         setCurrentTime(currentDateTime.getTime())
     }, [data])
 
-    useEffect( () => {
-        // Set up seconds ticking
-        timerID = setTimeout(tick, 1000);
-    }, [currentTime])
-
-    function tick() {
-        setCurrentTime(currentTime + 1000);
-    }
-
+    // Tick seconds on every parent update
+    useEffect(() => {
+        setCurrentTime(currentTime => currentTime + 1000);
+    }, [props.secondsTimer]);
 
     /* To avoid errors, check if data is truthy AND has a value
        Otherwise, display will try to render with an empty object
        (which is truthy) */
-
     if (data && data.datetime) {
         let dayDateTime = extractStrings(currentTime);
         let [displayDay, displayDate, displayTime] = [
@@ -72,7 +65,6 @@ function Display(props) {
         let dst = data.dst;
         let abbr = data.abbreviation;
         let utc = data.utc_offset;
-
         return (
             <div className="Display">
                 <DeleteButton onClick={handleDelete}/>
