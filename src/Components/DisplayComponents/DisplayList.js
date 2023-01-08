@@ -40,7 +40,7 @@ function DisplayList(props) {
 
     return (
         <div className="DisplayList">
-            {timezones.map((item, index) => {
+            {timezones.map( item => {
                 return <Display
                     id={item.id}
                     key={item.id}
