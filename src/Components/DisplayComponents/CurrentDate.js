@@ -1,7 +1,7 @@
 function CurrentDate(props) {
     return (
         <div>
-            {props.date}
+            {props.day} {props.date}
         </div>
     )
 }
