@@ -14,11 +14,6 @@ function DisplayList(props) {
     const [timezones, setTimezones] = useState(initialState);
 
     function handleAdd(timezone) {
-        // Get value from display's input
-        // Assign item key as 'locale' + index
-        // setTimezones(timezones.concat('value'))
-        //console.log(value)
-        console.log(timezone)
         if (timezone !== '') {
             let newItem = {
                 location: timezone,
@@ -33,7 +28,6 @@ function DisplayList(props) {
         let newArray = timezones.filter(item =>
             item.id !== id
         )
-        console.log(newArray);
         setTimezones(newArray);
     }
 
