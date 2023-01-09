@@ -6,14 +6,17 @@ function DisplayList(props) {
     const [timezones, setTimezones] = useState([]);
     const [allTimezones, setAllTimezones] = useState([]);
     const [secondsTimer, setSecondsTimer] = useState(0);
+    const [customTimeObj, setCustomTimeObj] = useState({});
 
+    // First, fetch full list of timezones
     useEffect(() => {
         fetch('http://worldtimeapi.org/api/timezone/').then(
             result => result.json()
         ).then(
             resultJSON => setAllTimezones(resultJSON)
     )}, []);
-
+    
+    // Then, begin ticking seconds (unified across displays)
     useEffect(() => {
         const timerID = setInterval(() => {
             setSecondsTimer((prev) => prev + 1)
@@ -23,7 +26,9 @@ function DisplayList(props) {
         }
     }, []);
 
+    
     function handleAdd(timezone) {
+        // Store added timezone in state array with unique id
         if (timezone !== '') {
             let newItem = {
                 location: timezone,
@@ -40,6 +45,16 @@ function DisplayList(props) {
         setTimezones(newArray);
     }
 
+    function handleCustomTime(time, utcOffset, timezone) {
+        // Receive data from most recently altered input
+        // To unify across all Displays
+        setCustomTimeObj({
+            time,
+            utcOffset,
+            timezone
+        })
+    }
+
     return (
         <div className="DisplayList">
             {timezones.map( item => {
@@ -48,7 +63,9 @@ function DisplayList(props) {
                     key={item.id}
                     timezone={item.location}
                     handleDelete={handleDelete}
-                    secondsTimer={secondsTimer} />
+                    secondsTimer={secondsTimer}
+                    handleCustomTime={handleCustomTime}
+                    customTimeObj={customTimeObj} />
                 }
             )}
             <AddDisplay handleAdd={handleAdd} timezones={allTimezones} />
