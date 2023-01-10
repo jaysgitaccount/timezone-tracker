@@ -60,7 +60,7 @@ function convertToHours(secondsTime) {
 }
 
 function Display(props) {
-    let url = `http://worldtimeapi.org/api/timezone/${props.timezone}`
+    let url = `https://worldtimeapi.org/api/timezone/${props.timezone}`
 
     const [data, setData] = useState({});
     const [currentTime, setCurrentTime] = useState('');
