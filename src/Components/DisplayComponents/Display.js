@@ -77,7 +77,7 @@ function Display(props) {
     // After data is fetched, extract epoch time as state
     useEffect(()=> {
         if (Object.keys(data).length > 0) {
-            let isoTime = data.datetime.substring(0,19) + 'Z'
+            let isoTime = data.datetime.substring(0,19);
             let currentDateTime = new Date(isoTime);
             setCurrentTime(currentDateTime.getTime())
         }
