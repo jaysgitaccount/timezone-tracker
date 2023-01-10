@@ -17,7 +17,9 @@ function getTimeStrings(timeState) {
         datetime.toDateString().substring(0, 3),
         datetime.toDateString().substring(4)
     ]
+
     let time = datetime.toTimeString().split(' ')[0];
+
     return [day, date, time];
 }
 
@@ -25,6 +27,7 @@ function getTimeStrings(timeState) {
 function getLocationStrings(timezone) {
     let formattedString = timezone.replaceAll('_', ' ');
     let [country, city] = formattedString.split('/');
+
     let string = "";
     if (city !== undefined) {
         string += `${city}, `
@@ -32,10 +35,12 @@ function getLocationStrings(timezone) {
     if (country !== undefined) {
         string += `${country}`
     }
+
     return string;
 }
 
 function convertToSeconds(customTime) {
+    // Takes format 'HH:MM'
     let [hours, minutes] = customTime.split(':');
     let seconds = (hours * 60 * 60) + (minutes * 60);
 
@@ -108,11 +113,10 @@ function Display(props) {
             utcOffset,
             timezone,
         } = customTimeObj;
-
-        let localUTCOffset = data.utc_offset.substring(0, 3) * 3600;
-        let originalTime = time;
-        let externalUTCOffset = utcOffset.substring(0, 3) * 3600;
+        let localUTCOffset = convertToSeconds(data.utc_offset.substring(1, 6));
+        let externalUTCOffset = convertToSeconds(utcOffset.substring(1, 6));
         let externalTimezone = getLocationStrings(timezone);
+        let originalTime = time;
 
         // Convert hours and minutes to seconds
         let secondsExternalTime = convertToSeconds(time);
@@ -170,11 +174,11 @@ function Display(props) {
                 <DST dst={dst} />
                 <Clock time={displayTime} />
                 <DigitalTime time={displayTime} />
-                <CurrentDate day={displayDay} date={displayDate}/>
+                <CurrentDate day={displayDay}
+                    date={displayDate} />
                 <CustomTimeInput
                     handleChange={handleCustomTimeInput}
-                    data={convertTime(props.customTimeObj)}
-                     />
+                    data={convertTime(props.customTimeObj)} />
             </div>
         )
     } else {
