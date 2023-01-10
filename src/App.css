@@ -1,9 +1,32 @@
+:root {
+  font-size: 17px;
+    /* Colour variables */
+  --main-color: rgb(36, 36, 36);
+  --card-color: rgb(255, 255, 255);
+  --bg-color: #f7f6f2;
+  --light-brown: #ca855d;
+  --mauve: #6f242f;
+  --pale-green: #a2bdaf;
+  --mustard-yellow: #f4b53f;
+  --inactive-grey: rgb(122, 122, 122);
+  --border-radius-L: 20px;
+  --border-radius-S: 10px;
+  --border-radius-round: 999px;
+}
+
 * {
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Sofia Sans', 'Sofia-Sans';
+  color: var(--main-color);
+  background-color: var(--bg-color);
+}
+
 h1, h2, h3 {
   margin: 0;
+  text-transform: capitalize;
 }
 
 .App {
@@ -11,41 +34,7 @@ h1, h2, h3 {
   text-align: center;
   display: flex;
   flex-direction: column;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  padding: 1rem;
 }
 
 .Main {
@@ -53,81 +42,57 @@ h1, h2, h3 {
 }
 
 .Main .DisplayList {
-  border: 2px solid black;
+  margin: 1rem auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 1.5rem;
 }
 
 footer {
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
-/* Display UI */
-
-.Display {
-  position: relative;
-  border: 1px solid red;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
+footer p {
+  font-size: 0.8rem;
+  margin: 0.4rem auto;
 }
 
-.Display>div {
-  border: solid 1px blue;
+a {
+  color: var(--mustard-yellow);
+  font-weight: 900;
 }
 
-.Display .delete {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 1.5rem;
-  width: 1.5rem;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  line-height: 0px;
+a:hover {
+  color: var(--light-brown);
 }
 
-.Display .DST {
-  padding: 3px;
-  border-radius: 2px;
-  background-color: rgb(180, 180, 180);
-  border: solid 1px rgb(73, 73, 73);
-  color: rgb(73, 73, 73);
+/* Display width media queries */
+@media screen and (max-width: 1500px) {
+  .Main .DisplayList {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }
 
-.Display .DST.active {
-  padding: 3px;
-  border-radius: 2px;
-  background-color: green;
-  border: solid 1px rgb(120, 255, 120);
-  color: rgb(120, 255, 120);
+@media screen and (max-width: 1200px) {
+  .Main .DisplayList {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-/* Clock UI */
-
-.Clock {
-  position: relative;
-  background-color: white;
-  border: solid 2px black;
-  border-radius: 999px;
+@media screen and (max-width: 600px) {
+  .Main .DisplayList {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.Display .Clock {
-  height: 80px;
-  width: 80px;
+@media screen and (max-width: 400px) {
+  .Main .DisplayList {
+    grid-template-columns: 1fr;
+  }
 }
 
-.SecondaryDisplay .Clock {
-  height: 70px;
-  width: 70px;
-}
+/* Styling classes */
 
 .center-absolute {
   position: absolute;
@@ -136,12 +101,115 @@ footer {
   transform: translate(-50%, -50%);
 }
 
-.Clock .pivot {
-  height: 7px;
-  width: 7px;
+/* Display UI */
+
+.Display {
+  height: 22rem;
+  position: relative;
+  background-color: var(--card-color);
+  border-radius: var(--border-radius-L);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  color: var(--main-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.Display p {
+  margin: 0;
+}
+
+.Display h3 {
+  font-size: 1.1rem;
+}
+
+.Display label {
+  display: block;
+}
+
+.Display select {
+  width: 80%;
+  font-family: 'Sofia Sans', 'Sofia-Sans';
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: var(--border-radius-L);
+}
+
+.Display input {
+  border-radius: var(--border-radius-L);
+  font-size: 0.9rem;
+  padding: 2px 4px;
+}
+
+.Display select option {
+  font-size: 0.8rem;
   background-color: white;
-  border-radius: 999px;
-  border: solid 2px black;
+}
+
+.Display select, input {
+  background-color: var(--mustard-yellow);
+  border: 2px solid var(--pale-green);
+}
+
+.Display>div {
+  margin: 0.1rem auto;
+}
+
+.Display .delete {
+  font-family: 'Fredoka One', 'Fredoka-One';
+  font-weight: bold;
+  font-size: 1rem;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+  border: none;
+  background-color: var(--mustard-yellow);
+  border-radius: var(--border-radius-round);
+  text-align: center;
+}
+
+.Display .delete:hover {
+  background-color: var(--light-brown);
+}
+
+.Display .DST {
+  padding: 4px 8px;
+  border-radius: 2px;
+  background-color: var(--inactive-grey);
+  color: var(--main-color);
+  border-radius: var(--border-radius-L);
+  font-size: 1rem;
+}
+
+.Display .DST.active {
+  background-color: var(--pale-green);
+  color: var(--main-color);
+  font-weight: 900;
+}
+
+/* Clock UI */
+
+.Clock {
+  position: relative;
+  background-color: white;
+  border: solid 1px var(--mauve);
+  border-radius: var(--border-radius-round);
+  height: 80px;
+  width: 80px;
+}
+
+.Clock .pivot {
+  height: 5px;
+  width: 5px;
+  background-color: white;
+  border-radius: var(--border-radius-round);
+  border: solid 1px var(--mauve);
 }
 
 .Clock .clock-hand-wrapper {
@@ -150,27 +218,39 @@ footer {
   height: 100%;
 }
 
-.Clock .ClockHand div {
-  background-color: black;
-  height: 50%;
-}
-
-.Clock .ClockHand div:last-child {
-  /* Change to white when rotation is working */
-  background-color: rgba(0, 0, 0, 0);
-}
-
 .Clock .hour{
   width: 3%;
-  height: 40%;
+  height: 50%;
 }
 
 .Clock .minute {
   width: 2%;
-  height: 80%;
+  height: 75%;
 }
 
 .Clock .second {
   width: 1%;
   height: 90%;
+}
+
+/* Clockhand first half colours */
+.ClockHand.hour div {
+  background-color: var(--light-brown);
+}
+
+.ClockHand.minute div {
+  background-color: var(--mustard-yellow);
+}
+
+.ClockHand.second div {
+  background-color: var(--pale-green);
+}
+
+.Clock .ClockHand div {
+  height: 50%;
+}
+
+.Clock .ClockHand div:last-child {
+  /* Second "half" of hand is invisible */
+  background-color: rgba(0, 0, 0, 0);
 }

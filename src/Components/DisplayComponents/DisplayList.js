@@ -26,7 +26,6 @@ function DisplayList(props) {
         }
     }, []);
 
-    
     function handleAdd(timezone) {
         // Store added timezone in state array with unique id
         if (timezone !== '') {
