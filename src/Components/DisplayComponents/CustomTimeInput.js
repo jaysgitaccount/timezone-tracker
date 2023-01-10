@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
 function CustomTimeInput(props) {
-    const [value, setValue] = useState(undefined);
+    const [value, setValue] = useState(props.data);
     const [label, setLabel] = useState(['Pick a time', ''])
 
     useEffect(() => {
-        if (Object.keys(props.data).length == 0) {
-            setValue(undefined);
+        if (Object.keys(props.data).length <= 1) {
+            // If no time conversion, use initial values
+            setValue(props.data.initialValue)
             setLabel(['Pick a time:', '']);
         } else {
             setValue(props.data.convertedTime);
