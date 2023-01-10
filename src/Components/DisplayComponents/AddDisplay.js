@@ -3,6 +3,22 @@ function AddDisplay(props) {
         props.handleAdd(e.target.value);
     }
 
+    /* Reformat timezone location for display */
+    function getLocationStrings(timezone) {
+        let formattedString = timezone.replaceAll('_', ' ');
+        let [country, city] = formattedString.split('/');
+
+        let string = "";
+        if (city !== undefined) {
+            string += `${city}, `
+        }
+        if (country !== undefined) {
+            string += `${country}`
+        }
+
+        return string;
+    }
+
     return (
         <div className="Display">
             <label htmlFor="timezone-select">Select timezone:</label>
@@ -10,7 +26,7 @@ function AddDisplay(props) {
                 <option value=""></option>
                 {
                     props.timezones.map( (item, index) =>
-                        <option key={`${item}${index}`} value={item}>{item}</option>
+                        <option key={`${item}${index}`} value={item}>{getLocationStrings(item)}</option>
                     )
                 }
             </select>
