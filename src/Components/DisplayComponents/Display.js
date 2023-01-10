@@ -104,7 +104,7 @@ function Display(props) {
     function convertTime(customTimeObj) {
         // Convert prop data from DisplayList to local time
         // If no data from DisplayList, create this object
-        if (!customTimeObj || Object.keys(customTimeObj).length == 0) {
+        if (!customTimeObj || Object.keys(customTimeObj).length === 0) {
             return {
                 initialValue: '00:00'
             };
