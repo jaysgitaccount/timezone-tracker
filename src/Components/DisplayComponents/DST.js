@@ -1,7 +1,7 @@
 function DST(props) {
     return (
         <div className={`DST ${props.dst && 'active'}`}>
-            DST
+            DST {props.dst ? `active (+${props.offset})` : 'inactive'}
         </div>
     )
 }

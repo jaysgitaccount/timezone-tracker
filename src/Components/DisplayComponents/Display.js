@@ -161,6 +161,7 @@ function Display(props) {
         ]
         let timezone = getLocationStrings(data.timezone);
         let dst = data.dst;
+        let dstOffset = convertToHours(data.dst_offset);
         let abbr = data.abbreviation;
         let utc = data.utc_offset;
         return (
@@ -171,7 +172,7 @@ function Display(props) {
                     <TimezoneAbbr abbr={abbr} />
                     <UTCOffset utc={utc} />
                 </div>
-                <DST dst={dst} />
+                <DST dst={dst} offset={dstOffset} />
                 <Clock time={displayTime} />
                 <DigitalTime time={displayTime} />
                 <CurrentDate day={displayDay}
