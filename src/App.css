@@ -8,7 +8,7 @@
   --mauve: #6f242f;
   --pale-green: #a2bdaf;
   --mustard-yellow: #f4b53f;
-  --inactive-grey: rgb(122, 122, 122);
+  --inactive-grey: rgb(172, 172, 172);
   --border-radius-L: 20px;
   --border-radius-S: 10px;
   --border-radius-round: 999px;
@@ -48,6 +48,12 @@ h1, h2, h3 {
   gap: 1.5rem;
 }
 
+header p {
+  margin: 1rem auto;
+  width: 90%;
+  text-align: start;
+}
+
 footer {
   font-size: 1rem;
   text-transform: uppercase;
@@ -59,7 +65,7 @@ footer p {
 }
 
 a {
-  color: var(--mustard-yellow);
+  color: var(--mauve);
   font-weight: 900;
 }
 
@@ -104,7 +110,7 @@ a:hover {
 /* Display UI */
 
 .Display {
-  height: 22rem;
+  height: 24rem;
   position: relative;
   background-color: var(--card-color);
   border-radius: var(--border-radius-L);
@@ -123,7 +129,8 @@ a:hover {
 }
 
 .Display h3 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  text-decoration: underline var(--pale-green);
 }
 
 .Display label {
@@ -132,26 +139,32 @@ a:hover {
 
 .Display select {
   width: 80%;
-  font-family: 'Sofia Sans', 'Sofia-Sans';
+  font-family: 'Sofia Sans', 'Sofia-Sans', sans-serif;
   font-size: 1rem;
   padding: 5px;
   border-radius: var(--border-radius-L);
+  border: 2px solid var(--pale-green);
+  background-color: white;
 }
 
 .Display input {
   border-radius: var(--border-radius-L);
-  font-size: 0.9rem;
-  padding: 2px 4px;
+  border: 2px solid var(--mustard-yellow);
+  font-size: 1rem;
+  padding: 2px 6px;
+  font-family: 'DM Mono', monospace;
+  text-align: right;
+}
+
+.Display input:hover,
+.Display button:hover,
+.Display select:hover {
+  cursor: pointer;
 }
 
 .Display select option {
   font-size: 0.8rem;
   background-color: white;
-}
-
-.Display select, input {
-  background-color: var(--mustard-yellow);
-  border: 2px solid var(--pale-green);
 }
 
 .Display>div {
@@ -180,17 +193,30 @@ a:hover {
 
 .Display .DST {
   padding: 4px 8px;
-  border-radius: 2px;
+  margin: 0.3rem;
   background-color: var(--inactive-grey);
   color: var(--main-color);
   border-radius: var(--border-radius-L);
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .Display .DST.active {
   background-color: var(--pale-green);
   color: var(--main-color);
-  font-weight: 900;
+}
+
+.Display .DigitalTime {
+  margin: 0.3rem;
+  font-size: 0.9rem;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  color: var(--light-brown);
+}
+
+/* Standardize height of last */
+.CustomTimeInput .day-result {
+  min-height: 1rem;
+  max-height: 1rem;
 }
 
 /* Clock UI */
@@ -198,10 +224,10 @@ a:hover {
 .Clock {
   position: relative;
   background-color: white;
-  border: solid 1px var(--mauve);
+  border: solid 2px var(--mauve);
   border-radius: var(--border-radius-round);
-  height: 80px;
-  width: 80px;
+  height: 130px;
+  width: 130px;
 }
 
 .Clock .pivot {
@@ -219,17 +245,17 @@ a:hover {
 }
 
 .Clock .hour{
-  width: 3%;
+  width: 5%;
   height: 50%;
 }
 
 .Clock .minute {
-  width: 2%;
-  height: 75%;
+  width: 3%;
+  height: 80%;
 }
 
 .Clock .second {
-  width: 1%;
+  width: 2%;
   height: 90%;
 }
 
@@ -248,6 +274,7 @@ a:hover {
 
 .Clock .ClockHand div {
   height: 50%;
+  border-radius: var(--border-radius-round);
 }
 
 .Clock .ClockHand div:last-child {
