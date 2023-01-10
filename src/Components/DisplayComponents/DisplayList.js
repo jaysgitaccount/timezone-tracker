@@ -10,7 +10,7 @@ function DisplayList(props) {
 
     // First, fetch full list of timezones
     useEffect(() => {
-        fetch('http://worldtimeapi.org/api/timezone/').then(
+        fetch('https://worldtimeapi.org/api/timezone/').then(
             result => result.json()
         ).then(
             resultJSON => setAllTimezones(resultJSON)
