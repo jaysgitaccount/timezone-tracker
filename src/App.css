@@ -86,13 +86,13 @@ a:hover {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .Main .DisplayList {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
   .Main .DisplayList {
     grid-template-columns: 1fr;
   }
@@ -213,10 +213,15 @@ a:hover {
   color: var(--light-brown);
 }
 
-/* Standardize height of last */
+/* Standardize height of last line */
 .CustomTimeInput .day-result {
   min-height: 1rem;
   max-height: 1rem;
+}
+
+.CustomTimeInput span {
+  text-decoration: underline;
+  text-decoration-color: var(--light-brown);
 }
 
 /* Clock UI */
