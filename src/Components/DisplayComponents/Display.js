@@ -166,17 +166,18 @@ function Display(props) {
         let utc = data.utc_offset;
         return (
             <div className="Display">
+                <Clock time={displayTime} />
+                <DigitalTime time={displayTime} />
                 <DeleteButton onClick={handleDelete}/>
                 <Timezone timezone={timezone}/>
                 <div>
                     <TimezoneAbbr abbr={abbr} />
                     <UTCOffset utc={utc} />
                 </div>
-                <DST dst={dst} offset={dstOffset} />
-                <Clock time={displayTime} />
-                <DigitalTime time={displayTime} />
+                
                 <CurrentDate day={displayDay}
                     date={displayDate} />
+                <DST dst={dst} offset={dstOffset} />
                 <CustomTimeInput
                     handleChange={handleCustomTimeInput}
                     data={convertTime(props.customTimeObj)} />

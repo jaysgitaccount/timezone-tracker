@@ -25,7 +25,9 @@ function CustomTimeInput(props) {
             <input type="time" id="date" name="date"
                    value={value}
                    onChange={handleChange}></input>
-            <p>{label[1]}</p>
+            <div className="day-result">
+                <p>{label[1]}</p>
+            </div>
         </div>
     )
 }
