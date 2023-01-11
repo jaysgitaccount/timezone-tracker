@@ -45,7 +45,8 @@ h1, h2, h3 {
   margin: 1rem auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 1.5rem;
+  grid-auto-rows: auto;
+  gap: 1rem;
 }
 
 header p {
@@ -110,7 +111,6 @@ a:hover {
 /* Display UI */
 
 .Display {
-  height: 24rem;
   position: relative;
   background-color: var(--card-color);
   border-radius: var(--border-radius-L);
@@ -122,10 +122,6 @@ a:hover {
   color: var(--main-color);
   font-size: 0.9rem;
   font-weight: 600;
-}
-
-.Display p {
-  margin: 0;
 }
 
 .Display h3 {
