@@ -126,27 +126,31 @@ function Display(props) {
             utcOffset,
             timezone,
         } = customTimeObj;
-        let localUTCOffset = convertToSeconds(data.utc_offset.substring(0, 6));
-        let externalUTCOffset = convertToSeconds(utcOffset.substring(0, 6));
+        let localUTCOffset = convertToSeconds(data.utc_offset);
+        let externalUTCOffset = convertToSeconds(utcOffset);
         let externalTimezone = getLocationStrings(timezone);
         let originalTime = time;
 
-        // Convert hours and minutes to seconds
+        // Convert HH:MM to seconds (relative to 12AM)
         let secondsExternalTime = convertToSeconds(time);
 
-        // Apply UTC offset
+        // Apply UTC offsets to this time
         let timeUTC = secondsExternalTime + (localUTCOffset - externalUTCOffset);
 
-        // Use converted time to calculate the new time,
+        // Use this to calculate the new time,
         // Relative to midnight of the local timezone
         let calculatedTime;
         let maxSecsInDay =  24*3600;
         let dayResult = "";
 
         if (timeUTC < 0) {
+            // If timeUTC is negative, it's the previous day
+            // Subtract it from 12AM to get yesterday's time
             calculatedTime = maxSecsInDay - (timeUTC * -1)
             dayResult = 'the previous day'
         } else if (timeUTC >= maxSecsInDay) {
+            // If time is greater than total # of seconds in one day,
+            // Get time from the next day's 12AM
             calculatedTime = timeUTC - maxSecsInDay;
             dayResult = 'the next day'
         } else {
