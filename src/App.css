@@ -34,11 +34,11 @@ h1, h2, h3 {
   text-align: center;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 }
 
 .Main {
   flex: 2 1 auto;
+  margin: auto 1rem;
 }
 
 .Main .DisplayList {
@@ -49,25 +49,44 @@ h1, h2, h3 {
   gap: 1rem;
 }
 
-header p {
+header {
+  border-radius: var(--border-radius-L);
+  background-color: white;
   margin: 1rem auto;
-  width: 90%;
+  padding: 1rem;
+  max-width: 940px;
+}
+
+@media screen and (max-width: 1000px) {
+  header {
+    max-width: calc(100vw - 2rem);
+  }
+}
+
+header h1 {
+  text-decoration: underline var(--pale-green); 
+}
+
+header p {
+  margin: 1rem;
   text-align: start;
 }
 
 footer {
   font-size: 1rem;
   text-transform: uppercase;
+  margin: 1rem;
 }
 
 footer p {
   font-size: 0.8rem;
-  margin: 0.4rem auto;
+  margin: 0.2rem auto;
 }
 
 a {
-  color: var(--mauve);
+  color: var(--main-color);
   font-weight: 900;
+  text-decoration: underline var(--pale-green);
 }
 
 a:hover {
@@ -75,6 +94,7 @@ a:hover {
 }
 
 /* Display width media queries */
+
 @media screen and (max-width: 1500px) {
   .Main .DisplayList {
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -99,7 +119,7 @@ a:hover {
   }
 }
 
-/* Styling classes */
+/* Utility styling classes */
 
 .center-absolute {
   position: absolute;
@@ -260,7 +280,18 @@ a:hover {
   height: 90%;
 }
 
+.Clock .ClockHand div {
+  height: 50%;
+  border-radius: var(--border-radius-round);
+}
+
+.Clock .ClockHand div:last-child {
+  /* Second "half" of hand is invisible */
+  background-color: rgba(0, 0, 0, 0);
+}
+
 /* Clockhand first half colours */
+
 .ClockHand.hour div {
   background-color: var(--light-brown);
 }
@@ -271,14 +302,4 @@ a:hover {
 
 .ClockHand.second div {
   background-color: var(--pale-green);
-}
-
-.Clock .ClockHand div {
-  height: 50%;
-  border-radius: var(--border-radius-round);
-}
-
-.Clock .ClockHand div:last-child {
-  /* Second "half" of hand is invisible */
-  background-color: rgba(0, 0, 0, 0);
 }
