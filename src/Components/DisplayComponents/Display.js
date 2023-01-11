@@ -26,14 +26,18 @@ function getTimeStrings(timeState) {
 /* Reformat timezone location for display */
 function getLocationStrings(timezone) {
     let formattedString = timezone.replaceAll('_', ' ');
-    let [country, city] = formattedString.split('/');
+    let [region3, region2, region1] = formattedString.split('/');
 
+    // Account for how some locations have 3 parts and others have 2
     let string = "";
-    if (city !== undefined) {
-        string += `${city}, `
+    if (region1 !== undefined) {
+        string += `${region1}, `
     }
-    if (country !== undefined) {
-        string += `${country}`
+    if (region2 !== undefined) {
+        string += `${region2}`
+    }
+    if (region3 !== undefined) {
+        string += `, ${region3}`
     }
 
     return string;

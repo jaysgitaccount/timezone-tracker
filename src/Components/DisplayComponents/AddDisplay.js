@@ -2,22 +2,26 @@ function AddDisplay(props) {
     function handleChange(e) {
         props.handleAdd(e.target.value);
     }
+    
+/* Reformat timezone location for display */
+function getLocationStrings(timezone) {
+    let formattedString = timezone.replaceAll('_', ' ');
+    let [region3, region2, region1] = formattedString.split('/');
 
-    /* Reformat timezone location for display */
-    function getLocationStrings(timezone) {
-        let formattedString = timezone.replaceAll('_', ' ');
-        let [country, city] = formattedString.split('/');
-
-        let string = "";
-        if (city !== undefined) {
-            string += `${city}, `
-        }
-        if (country !== undefined) {
-            string += `${country}`
-        }
-
-        return string;
+    // Account for how some locations have 3 parts and others have 2
+    let string = "";
+    if (region1 !== undefined) {
+        string += `${region1}, `
     }
+    if (region2 !== undefined) {
+        string += `${region2}`
+    }
+    if (region3 !== undefined) {
+        string += `, ${region3}`
+    }
+
+    return string;
+}
 
     return (
         <div className="Display">
