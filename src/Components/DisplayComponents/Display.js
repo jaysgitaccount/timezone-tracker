@@ -40,11 +40,21 @@ function getLocationStrings(timezone) {
 }
 
 function convertToSeconds(customTime) {
+    // Calculates the number of seconds that a time is from 12AM, or 00:00
     // Takes format 'HH:MM'
-    let [hours, minutes] = customTime.split(':');
+    // Also accounts for negative UTC offsets '-HH:MM'
+    let prefix = '';
+    let timeString = customTime;
+
+    if (customTime[0] === '-') {
+        prefix = customTime[0];
+        timeString = customTime.substring(1, (customTime.length));
+    }
+
+    let [hours, minutes] = timeString.split(':');
     let seconds = (hours * 60 * 60) + (minutes * 60);
 
-    return seconds;
+    return Number(`${prefix}${seconds}`);
 }
 
 function convertToHours(secondsTime) {
@@ -103,7 +113,7 @@ function Display(props) {
 
     function convertTime(customTimeObj) {
         // Convert prop data from DisplayList to local time
-        
+
         // If no data from DisplayList, create this object
         if (!customTimeObj || Object.keys(customTimeObj).length === 0) {
             return {
@@ -116,8 +126,8 @@ function Display(props) {
             utcOffset,
             timezone,
         } = customTimeObj;
-        let localUTCOffset = convertToSeconds(data.utc_offset.substring(1, 6));
-        let externalUTCOffset = convertToSeconds(utcOffset.substring(1, 6));
+        let localUTCOffset = convertToSeconds(data.utc_offset.substring(0, 6));
+        let externalUTCOffset = convertToSeconds(utcOffset.substring(0, 6));
         let externalTimezone = getLocationStrings(timezone);
         let originalTime = time;
 
