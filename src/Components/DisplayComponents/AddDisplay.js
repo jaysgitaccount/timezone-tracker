@@ -3,25 +3,29 @@ function AddDisplay(props) {
         props.handleAdd(e.target.value);
     }
     
-/* Reformat timezone location for display */
-function getLocationStrings(timezone) {
-    let formattedString = timezone.replaceAll('_', ' ');
-    let [region3, region2, region1] = formattedString.split('/');
-
-    // Account for how some locations have 3 parts and others have 2
-    let string = "";
-    if (region1 !== undefined) {
-        string += `${region1}, `
+    // Format names for option list
+    function getLocationStrings(timezone) {
+        let formattedString = timezone.replaceAll('_', ' ');
+        let locationArray = [];
+        
+        formattedString.split('/').forEach( word => {
+            locationArray.push(word);
+        })
+    
+        let string = "";
+    
+        locationArray.forEach( (word, index) => {
+            if (index === 0) {
+                string += word;
+            } else {
+                string += ', ';
+                string += word;
+            }
+        })
+    
+        return string;
     }
-    if (region2 !== undefined) {
-        string += `${region2}`
-    }
-    if (region3 !== undefined) {
-        string += `, ${region3}`
-    }
-
-    return string;
-}
+    
 
     return (
         <div className="Display">
