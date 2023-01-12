@@ -140,6 +140,7 @@ function getLocationStrings(timezone) {
 
     let string = "";
 
+    // Need to reverse the order of words (do for loop i--)
     locationArray.forEach( (word, index) => {
         if (index === 0) {
             string += word;
@@ -182,23 +183,44 @@ function convertToHours(millisecondsTime) {
     return `${hours}:${minutes}`
 }
 
+function convertSecsToHHMM(seconds) {
+    let totalMinutes = (seconds - (seconds % 60)) / 60;
+    let minutes = totalMinutes % 60;
+    let hours = Math.floor(totalMinutes / 60)
+    
+    hours = hours < 10 ? `0${hours}` : hours;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${hours}:${minutes}`
+}
+
+const options = function (timezone, isHour12) {
+    return {
+        timeZone: timezone,
+        hour12: isHour12,
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    }
+}
+
 function Display(props) {
     const [data, setData] = useState({});
-    const [currentTime, setCurrentTime] = useState('--:--:--');
+    const [currentTime, setCurrentTime] = useState('');
 
     let url = `https://worldtimeapi.org/api/timezone/${props.timezone}`
-    let dayDateTime;
-    // these depend on the output of the final code
-    // let [displayDay, displayDate, displayTime] = [
-    //     dayDateTime[0],
-    //     dayDateTime[1],
-    //     dayDateTime[2]
-    // ]
-    let timezone;
-    let dst;
-    let dstOffset;
-    let abbr;
-    let utc;
+    let displayDay = '';
+    let displayDate = '';
+    let displayTime = '';
+    let timezone = '';
+    let abbr = '';
+    let utc = '';
+    let dst = '';
+    let dstOffset = '';
 
     // Fetch data and store in state
     useEffect(() => {
@@ -212,8 +234,30 @@ function Display(props) {
     // On receiving current time from parent,
     // Convert to current time string and set state
     useEffect(() => {
-        
+        let currentTimestamp = props.currentTime;
+        let convertedTimestamp = currentTimestamp.toLocaleString('en-AU', options(props.timezone, false));
+        setCurrentTime(convertedTimestamp);
+        console.log(convertedTimestamp)
     }, [props.timezone, props.currentTime])
+
+    function convertTimezones (customTimeObj) {
+        // Accepts an object and processes data for child to display
+        // YYYY-MM-DD HH:MM:SS +HH:MM or Day Month Year HH:MM +HH:MM
+        // Timezone offset string in UTC-04:00 :
+        // This accepts both Jun and June, 01 and 1
+
+        let time = '1 June 2017 08:38:00 -4:00'
+        let timeMs = Date.parse(time);
+ 
+        let customDate = new Date(timeMs);
+        // The new Date automatically displays it as Sydney time
+        console.log(customDate)
+
+        let convertedDate = customDate.toLocaleString('en-AU', options);
+        console.log(convertedDate)
+
+        return convertedDate;
+    }
 
     function handleDelete() {
         props.handleDelete(props.id);
@@ -287,18 +331,18 @@ function Display(props) {
 
     // If data has been fetched, initialise display components
     if (data && data.datetime) {
-        dayDateTime = getTimeStrings(currentTime);
-        let [displayDay, displayDate, displayTime] = [
-            dayDateTime[0],
-            dayDateTime[1],
-            dayDateTime[2]
-        ]
+        ([displayDay, displayDate, displayTime] = [
+            currentTime.split(', ')[0],
+            currentTime.split(', ')[1],
+            currentTime.split(', ')[2]
+        ])
         timezone = getLocationStrings(data.timezone);
-        dst = data.dst;
-        // Convert dstOffset to ms from s
-        dstOffset = convertToHours(data.dst_offset*1000);
         abbr = data.abbreviation;
         utc = data.utc_offset;
+        dst = data.dst;
+        dstOffset = convertSecsToHHMM(data.dst_offset);
+
+
         return (
             <div className="Display">
                 <Clock time={displayTime} />
