@@ -149,7 +149,9 @@ function Display(props) {
         // If no data from DisplayList, create this object
         if (!dateObj || Object.keys(dateObj).length === 0) {
             let initialDateTime = data.datetime.split('.')[0];
-            let [day, date, time] = convertDate(initialDateTime, inputOptions(props.timezone)).split(', ');
+            let convertedInitDate = convertDate(initialDateTime, inputOptions(props.timezone)).split(', ');
+            let date = convertedInitDate[1];
+            let time = convertedInitDate[2];
             return {
                 // Initialise the value of the controlled components
                 convertedTime: time,
