@@ -9,6 +9,111 @@ import UTCOffset from "./UTCOffset"
 import DeleteButton from "./DeleteButton";
 import CustomTimeInput from './CustomTimeInput';
 
+let ISOHandler = (function() {
+    // Format: 2023-01-11T04:39:38.763Z
+    function getHMS(string) {
+        return string.split('T').pop().split('.')[0];
+    }
+
+    function getDate(string) {
+        return string.split('T')[0];
+    }
+
+    return {
+        getHMS,
+        getDate,
+    }
+})();
+
+let DateTimeConverter = (function() {
+    function offsetMsTime(timeMs, offsetMs) {
+        // Take time in ms and return time in ms with offset applied
+        return timeMs + offsetMs;
+    }
+
+    function convertTimeDay(timeInMs) {
+        // Compare a converted time in ms against 00:00
+        // To determine the actual time and what day it is now
+
+        let maxMsInDay =  24*3600*1000;
+        let dayResult = "";
+        let calculatedTimeMs;
+
+        if (timeInMs < 0) {
+            // If timeUTC is negative, it's the previous day
+            // Subtract it from 12AM to get yesterday's time
+            calculatedTimeMs = maxMsInDay - (timeInMs * -1)
+            dayResult = 'previous'
+        } else if (timeInMs >= maxMsInDay) {
+            // If time is greater than total # of seconds in one day,
+            // Get time from the next day's 12AM
+            calculatedTimeMs = timeInMs - maxMsInDay;
+            dayResult = 'next'
+        } else {
+            calculatedTimeMs = timeInMs;
+        }
+        
+        return {
+            calculatedTimeMs,
+            dayResult
+        }
+    }
+
+    function convertHMSToMs(string) {
+        // Take HH:MM:SS string, or +HH:MM (UTC offset)
+        // Account for negative UTC offsets
+        let prefix = string[0] === '+' || string[0] === '-'
+                        ? string[0]
+                        : '';
+        
+        let [hours, minutes, seconds] = string.split(':');
+
+        // Convert individual values to ms;
+        let hoursMs = hours * 60 * 60 * 1000;
+        let minutesMs = minutes * 60 * 1000;
+        let secondsMs = seconds ? seconds * 1000
+                                : 0;
+
+        return Number(`${prefix}${hoursMs + minutesMs + secondsMs}`);
+    }
+
+    function convertMsToHMS(value) {
+        let secondsTotal = Math.floor(value / 1000);
+        let seconds = secondsTotal % 60;
+        let minutesTotal = (secondsTotal - seconds) / 60;
+        let minutes = minutesTotal % 60;
+        let hours = (minutesTotal - minutes) / 60;
+
+        hours = formatTime(hours);
+        minutes = formatTime(minutes);
+        seconds = formatTime(seconds);
+
+        return `${hours}:${minutes}:${seconds}`
+    }
+
+    function formatTime(value) {
+        // Check if a time value, e.g. HH or MM, needs a 0 added
+        // To fit the correct format
+        if (value < 10) {
+            return `0${value}`
+        } else {
+            return value;
+        }
+    }
+
+    function convertSecondsToMs(value) {
+        return value * 1000;
+    }
+
+    return {
+        offsetMsTime,
+        convertHMSToMs,
+        convertMsToHMS,
+        convertTimeDay,
+        convertSecondsToMs
+    }
+})();
+
 /* Take in epoch time state and return strings for display */
 function getTimeStrings(timeState) {
     let datetime = new Date(timeState);
@@ -22,6 +127,7 @@ function getTimeStrings(timeState) {
 
     return [day, date, time];
 }
+
 
 /* Reformat timezone location for display */
 function getLocationStrings(timezone) {
@@ -46,7 +152,7 @@ function getLocationStrings(timezone) {
     return string;
 }
 
-function convertToSeconds(customTime) {
+function convertToMs(customTime) {
     // Calculates the number of seconds that a time is from 12AM, or 00:00
     // Takes format 'HH:MM'
     // Also accounts for negative UTC offsets '-HH:MM'
@@ -59,13 +165,13 @@ function convertToSeconds(customTime) {
     }
 
     let [hours, minutes] = timeString.split(':');
-    let seconds = (hours * 60 * 60) + (minutes * 60);
+    let milliseconds = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000);
 
-    return Number(`${prefix}${seconds}`);
+    return Number(`${prefix}${milliseconds}`);
 }
 
-function convertToHours(secondsTime) {
-    // We don't need seconds, so we're discarding them
+function convertToHours(millisecondsTime) {
+    let secondsTime = Math.floor(millisecondsTime / 1000);
     let totalMinutes = (secondsTime - (secondsTime % 60)) / 60;
     let minutes = totalMinutes % 60;
     let hours = Math.floor(totalMinutes / 60)
@@ -77,10 +183,22 @@ function convertToHours(secondsTime) {
 }
 
 function Display(props) {
-    let url = `https://worldtimeapi.org/api/timezone/${props.timezone}`
-
     const [data, setData] = useState({});
-    const [currentTime, setCurrentTime] = useState('');
+    const [currentTime, setCurrentTime] = useState('--:--:--');
+
+    let url = `https://worldtimeapi.org/api/timezone/${props.timezone}`
+    let dayDateTime;
+    // these depend on the output of the final code
+    // let [displayDay, displayDate, displayTime] = [
+    //     dayDateTime[0],
+    //     dayDateTime[1],
+    //     dayDateTime[2]
+    // ]
+    let timezone;
+    let dst;
+    let dstOffset;
+    let abbr;
+    let utc;
 
     // Fetch data and store in state
     useEffect(() => {
@@ -91,19 +209,11 @@ function Display(props) {
         )
     }, [props.timezone, url]);
 
-    // After data is fetched, extract epoch time as state
-    useEffect(()=> {
-        if (Object.keys(data).length > 0) {
-            let isoTime = data.datetime.substring(0,19);
-            let currentDateTime = new Date(isoTime);
-            setCurrentTime(currentDateTime.getTime())
-        }
-    }, [data])
-
-    // Tick seconds on every parent update
+    // On receiving current time from parent,
+    // Convert to current time string and set state
     useEffect(() => {
-        setCurrentTime(currentTime => currentTime + 1000);
-    }, [props.secondsTimer]);
+        
+    }, [props.timezone, props.currentTime])
 
     function handleDelete() {
         props.handleDelete(props.id);
@@ -133,13 +243,13 @@ function Display(props) {
             utcOffset,
             timezone,
         } = customTimeObj;
-        let localUTCOffset = convertToSeconds(data.utc_offset);
-        let externalUTCOffset = convertToSeconds(utcOffset);
+        let localUTCOffset = convertToMs(data.utc_offset);
+        let externalUTCOffset = convertToMs(utcOffset);
         let externalTimezone = getLocationStrings(timezone);
         let originalTime = time;
 
         // Convert HH:MM to seconds (relative to 12AM)
-        let secondsExternalTime = convertToSeconds(time);
+        let secondsExternalTime = convertToMs(time);
 
         // Apply UTC offsets to this time
         let timeUTC = secondsExternalTime + (localUTCOffset - externalUTCOffset);
@@ -147,18 +257,18 @@ function Display(props) {
         // Use this to calculate the new time,
         // Relative to midnight of the local timezone
         let calculatedTime;
-        let maxSecsInDay =  24*3600;
+        let maxMsInDay =  24*3600*1000;
         let dayResult = "";
 
         if (timeUTC < 0) {
             // If timeUTC is negative, it's the previous day
             // Subtract it from 12AM to get yesterday's time
-            calculatedTime = maxSecsInDay - (timeUTC * -1)
+            calculatedTime = maxMsInDay - (timeUTC * -1)
             dayResult = 'the previous day'
-        } else if (timeUTC >= maxSecsInDay) {
+        } else if (timeUTC >= maxMsInDay) {
             // If time is greater than total # of seconds in one day,
             // Get time from the next day's 12AM
-            calculatedTime = timeUTC - maxSecsInDay;
+            calculatedTime = timeUTC - maxMsInDay;
             dayResult = 'the next day'
         } else {
             calculatedTime = timeUTC;
@@ -177,17 +287,18 @@ function Display(props) {
 
     // If data has been fetched, initialise display components
     if (data && data.datetime) {
-        let dayDateTime = getTimeStrings(currentTime);
+        dayDateTime = getTimeStrings(currentTime);
         let [displayDay, displayDate, displayTime] = [
             dayDateTime[0],
             dayDateTime[1],
             dayDateTime[2]
         ]
-        let timezone = getLocationStrings(data.timezone);
-        let dst = data.dst;
-        let dstOffset = convertToHours(data.dst_offset);
-        let abbr = data.abbreviation;
-        let utc = data.utc_offset;
+        timezone = getLocationStrings(data.timezone);
+        dst = data.dst;
+        // Convert dstOffset to ms from s
+        dstOffset = convertToHours(data.dst_offset*1000);
+        abbr = data.abbreviation;
+        utc = data.utc_offset;
         return (
             <div className="Display">
                 <Clock time={displayTime} />
