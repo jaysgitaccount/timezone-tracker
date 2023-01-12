@@ -12,16 +12,16 @@ function reformatDate(date) {
 
 function CustomTimeInput(props) {
     // Receive initial state from date and time of parent
-    const [timeInput, setTimeInput] = useState(undefined)
-    const [dateInput, setDateInput] = useState(undefined)
+    const [timeInput, setTimeInput] = useState(props.data.convertedTime)
+    const [dateInput, setDateInput] = useState(props.data.convertedDate)
 
     const [label, setLabel] = useState(['Pick a time',''])
 
     useEffect(() => {
         let data = props.data;
 
-        // If no time conversion received
-        if (Object.keys(data).length <= 1) {
+        // If full object is not received
+        if (Object.keys(data).length <= 2) {
             setLabel([
                 <>
                 Pick a time and date: 
@@ -52,15 +52,7 @@ function CustomTimeInput(props) {
     }
 
     function sendDateTime() {
-        // Only send date and time when an input is changed, not on mount
-        let date = dateInput === undefined
-                    ? props.initDate
-                    : dateInput
-        let time = timeInput === undefined
-                    ? props.initTime
-                    : timeInput
-
-        let string = `${date} ${time}`
+        let string = `${dateInput} ${timeInput}`
 
         props.handleChange(string);
     }
