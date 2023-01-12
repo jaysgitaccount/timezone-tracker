@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 function DisplayList(props) {
     const [timezones, setTimezones] = useState([]);
     const [allTimezones, setAllTimezones] = useState([]);
-    const [secondsTimer, setSecondsTimer] = useState(0);
-    const [customTimeObj, setCustomTimeObj] = useState({});
+    const [dateObj, setDateObj] = useState({});
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     // First, fetch full list of timezones
     useEffect(() => {
@@ -16,11 +16,13 @@ function DisplayList(props) {
             resultJSON => setAllTimezones(resultJSON)
     )}, []);
     
-    // Then, begin ticking seconds (unified across displays)
+    // Begin sending time to all displays
     useEffect(() => {
         const timerID = setInterval(() => {
-            setSecondsTimer((prev) => prev + 1)
+            // Every second, get the current time in UTC
+            setCurrentTime(new Date());
         }, 1000);
+
         return () => {
             clearInterval(timerID);
         }
@@ -44,11 +46,12 @@ function DisplayList(props) {
         setTimezones(newArray);
     }
 
-    function handleCustomTime(time, utcOffset, timezone) {
+    function handleInput(date, utcOffset, timezone) {
         // Receive data from most recently altered input
         // To unify across all Displays
-        setCustomTimeObj({
-            time,
+        // console.log('DISPLAY LIST ' + date)
+        setDateObj({
+            date,
             utcOffset,
             timezone
         })
@@ -62,9 +65,9 @@ function DisplayList(props) {
                     key={item.id}
                     timezone={item.location}
                     handleDelete={handleDelete}
-                    secondsTimer={secondsTimer}
-                    handleCustomTime={handleCustomTime}
-                    customTimeObj={customTimeObj} />
+                    handleInput={handleInput}
+                    dateObj={dateObj}
+                    currentTime={currentTime} />
                 }
             )}
             <AddDisplay handleAdd={handleAdd} timezones={allTimezones} />
