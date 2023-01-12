@@ -40,3 +40,10 @@ My goals for this project:
     - Due to the calculations being based off each child's state, I think the conversion will need to be done on the child, which may or may not still technically be a controlled input setup
     - For now, I'm excluding this from the "final" product, as it's more of a stretch goal.
 - Appending 'Z' on the end of an ISO date/time string and then doing `new Date(isoString)` will actually automatically convert that time to "Zulu" which means UTC offset of 00:00. I didn't know this!
+
+## Notes from branching/rewriting time conversion
+- After testing, I noticed that the time doesn't continue to tick up if the window is minimised, putting it out of sync with system time. I decided to mitigate this, even though it's mostly a minor bug.
+- I did this by setting DisplayList to get a new Date every second (instead of tick all the times up by 1000ms every second), ensuring that the time would be up to date after every tick regardless of window focus.
+- However, to implement this, I then had to reconstruct my time code in Display, to be able to convert the received time to that Display's time zone instead of just adding 1000ms to the fetched time.
+- This would also fix a minor bug where sometimes an newly Display would be out of sync by 1 second to the others.
+- Through my learnings about the JavaScript `Date` object, I realised that this wasn't as hard as I thought this would be, and that I could ALSO implement the feature to convert any date and any time across all timezones.
