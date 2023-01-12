@@ -9,12 +9,55 @@ import UTCOffset from "./UTCOffset"
 import DeleteButton from "./DeleteButton";
 import CustomTimeInput from './CustomTimeInput';
 
+let displayOptions = function(targetTimezone) {
+    return {
+        timeZone: targetTimezone,
+        hour12: false,
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    }
+}
+
+let inputOptions = function(targetTimezone){
+    return {
+        timeZone: targetTimezone,
+        hourCycle: 'h23',
+        weekday: 'long',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+    }
+}
+
 /**
  * 
- * @param {*} timezone string e.g. 'Australia/Sydney'
+ * @param {string} string YYYY-MM-DD HH:MM:SS +HH:MM or Day Month Year HH:MM +HH:MM
+ * @param {object} optionsObj created from inputOptions or displayOptions
+ * @returns date string e.g. 'Saturday, 14/01/2023, 12:16'
+ */
+function convertDate (string, optionsObj) {
+    // Converting to ms and back gives us commas in the result
+    let timeMs = Date.parse(string);
+
+    let customDate = new Date(timeMs);
+
+    let convertedDate = customDate.toLocaleString('en-AU', optionsObj);
+
+    return convertedDate;
+}
+
+/**
+ * 
+ * @param {string} timezone from API, e.g. 'Australia/Sydney'
  * @returns string in reverse order e.g. 'Sydney, Australia'
  */
-
 function getLocationStrings(timezone) {
     let formattedString = timezone.replaceAll('_', ' ');
 
@@ -39,6 +82,11 @@ function getLocationStrings(timezone) {
     return string;
 }
 
+/**
+ * 
+ * @param {number} seconds 
+ * @returns string in format 'HH:MM'
+ */
 function convertSecsToHHMM(seconds) {
     let totalMinutes = (seconds - (seconds % 60)) / 60;
     let minutes = totalMinutes % 60;
@@ -48,46 +96,6 @@ function convertSecsToHHMM(seconds) {
     minutes = minutes < 10 ? `0${minutes}` : minutes;
 
     return `${hours}:${minutes}`
-}
-
-let displayOptions = function(targetTimezone) {
-    return {
-        timeZone: targetTimezone,
-        hour12: false,
-        weekday: 'long',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-    }
-}
-
-let inputOptions = function(targetTimezone){
-    return {
-        timeZone: targetTimezone,
-        hour12: false,
-        weekday: 'long',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-    }
-}
-
-function convertDate (string, optionsObj) {
-    // Converts a date string based on the options
-    // YYYY-MM-DD HH:MM:SS +HH:MM or Day Month Year HH:MM +HH:MM
-
-    let timeMs = Date.parse(string);
-
-    let customDate = new Date(timeMs);
-
-    let convertedDate = customDate.toLocaleString('en-AU', optionsObj);
-
-    return convertedDate;
 }
 
 function Display(props) {
@@ -104,23 +112,19 @@ function Display(props) {
     let dst = '';
     let dstOffset = '';
 
-    // Fetch data and store in state
     useEffect(() => {
         fetch(url).then(
             result => result.json()
         ).then(
+            // Store data in state
             resultJSON => setData(resultJSON)
         )
     }, [props.timezone, url]);
 
-    // On receiving current time from parent,
-    // Convert to current time string and set state
+    
     useEffect(() => {
-        let currentTimestamp = props.currentTime;
-        let convertedTimestamp = currentTimestamp.toLocaleString(
-            'en-AU', 
-            displayOptions(props.timezone)
-        );
+        // To standardise time ticking, convert time from parent
+        let convertedTimestamp = convertDate(props.currentTime, displayOptions(props.timezone))
 
         setCurrentTime(convertedTimestamp);
     }, [props.timezone, props.currentTime])
@@ -131,7 +135,6 @@ function Display(props) {
 
     function handleInput(dateString) {
         // Send CustomtimeInput's value & relevant data to parent
-        console.log('dateString ' + dateString)
         props.handleInput(
             dateString,
             data.utc_offset,
@@ -139,13 +142,20 @@ function Display(props) {
         );
     }
 
+    /**
+     * 
+     * @param {object} dateObj received from parent, contains the most recently updated Display's time/date input
+     * @returns Object with data for CustomTimeInput to display
+     */
     function convertTime(dateObj) {
-        // Convert prop data from DisplayList to local time
-
         // If no data from DisplayList, create this object
         if (!dateObj || Object.keys(dateObj).length === 0) {
+            let initialDateTime = data.datetime.split('.')[0];
+            let [day, date, time] = convertDate(initialDateTime, inputOptions(props.timezone)).split(', ');
             return {
-                convertedTime: '00:00',
+                // Initialise the value of the controlled components
+                convertedTime: time,
+                convertedDate: date
             };
         }
 

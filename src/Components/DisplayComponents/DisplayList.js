@@ -47,9 +47,7 @@ function DisplayList(props) {
     }
 
     function handleInput(date, utcOffset, timezone) {
-        // Receive data from most recently altered input
-        // To unify across all Displays
-        // console.log('DISPLAY LIST ' + date)
+        // Store data from most recently altered Display input
         setDateObj({
             date,
             utcOffset,
