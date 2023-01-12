@@ -13,7 +13,9 @@ function AddDisplay(props) {
         })
     
         let string = "";
-    
+
+        locationArray.reverse();
+        
         locationArray.forEach( (word, index) => {
             if (index === 0) {
                 string += word;

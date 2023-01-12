@@ -9,6 +9,12 @@ import UTCOffset from "./UTCOffset"
 import DeleteButton from "./DeleteButton";
 import CustomTimeInput from './CustomTimeInput';
 
+/**
+ * 
+ * @param {*} timezone string e.g. 'Australia/Sydney'
+ * @returns string in reverse order e.g. 'Sydney, Australia'
+ */
+
 function getLocationStrings(timezone) {
     let formattedString = timezone.replaceAll('_', ' ');
 
@@ -18,6 +24,8 @@ function getLocationStrings(timezone) {
     })
 
     let string = "";
+
+    locationArray.reverse();
 
     locationArray.forEach( (word, index) => {
         if (index === 0) {
