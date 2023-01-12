@@ -170,6 +170,7 @@ a:hover {
   padding: 2px 6px;
   font-family: 'DM Mono', monospace;
   text-align: center;
+  margin: 0.2rem;
 }
 
 .Display input:hover,
