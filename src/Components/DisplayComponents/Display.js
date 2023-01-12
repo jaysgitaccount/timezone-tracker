@@ -83,8 +83,7 @@ function getLocationStrings(timezone) {
 }
 
 /**
- * 
- * @param {number} seconds 
+ * @param {number} seconds an amount in seconds
  * @returns string in format 'HH:MM'
  */
 function convertSecsToHHMM(seconds) {
@@ -143,7 +142,6 @@ function Display(props) {
     }
 
     /**
-     * 
      * @param {object} dateObj received from parent, contains the most recently updated Display's time/date input
      * @returns Object with data for CustomTimeInput to display
      */

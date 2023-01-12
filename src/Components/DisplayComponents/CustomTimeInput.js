@@ -42,17 +42,17 @@ function CustomTimeInput(props) {
     }, [props.data])
 
     function handleTimeChange(e) {
-        setTimeInput(prev => e.target.value)
-        sendDateTime();
+        setTimeInput(e.target.value)
+        sendDateTime(dateInput, e.target.value);
     }
 
     function handleDateChange(e) {
-        setDateInput(prev => e.target.value)
-        sendDateTime();
+        setDateInput(e.target.value)
+        sendDateTime(e.target.value, timeInput);
     }
 
-    function sendDateTime() {
-        let string = `${dateInput} ${timeInput}`
+    function sendDateTime(date, time) {
+        let string = `${date} ${time}`
 
         props.handleChange(string);
     }
