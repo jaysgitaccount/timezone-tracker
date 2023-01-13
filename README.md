@@ -7,6 +7,8 @@ I used ReactJS and World Time API for this project. All other logic was written 
 
 [LIVE DEMO](https://thriving-syrniki-5daa84.netlify.app/)
 
+![TimezoneTracker](https://user-images.githubusercontent.com/93292687/212230187-54a70724-ead9-464a-9cd2-d1b0c610f923.jpg)
+
 ## Pre-project notes
 What I intend for this project is to create a convenient way for people who aren't thinking that hard about timezone differences to be able to track the difference in time between locations. This includes whether a location is experiencing DST or not. I've always had problems understanding the time in America or Europe vs my current location, so I'm hoping to clear up some confusion for myself, and also learn React while I'm at it!
 
