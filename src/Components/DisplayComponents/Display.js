@@ -134,6 +134,7 @@ function Display(props) {
 
     function handleInput(dateString) {
         // Send CustomtimeInput's value & relevant data to parent
+
         props.handleInput(
             dateString,
             data.utc_offset,

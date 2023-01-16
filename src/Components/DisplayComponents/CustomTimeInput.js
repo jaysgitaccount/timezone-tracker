@@ -13,7 +13,7 @@ function reformatDate(date) {
 function CustomTimeInput(props) {
     // Receive initial state from date and time of parent
     const [timeInput, setTimeInput] = useState(props.data.convertedTime)
-    const [dateInput, setDateInput] = useState(props.data.convertedDate)
+    const [dateInput, setDateInput] = useState(reformatDate(props.data.convertedDate))
 
     const [label, setLabel] = useState(['Pick a time',''])
 
@@ -35,7 +35,7 @@ function CustomTimeInput(props) {
                 When it's <span>{data.originalTime}</span> on <span>{data.originalDay}, {data.originalDate}</span> in <span>{data.originalTimezone}</span>, the time here is
                 </>,
                 <>
-                on <span>{data.convertedDay},</span>
+                on <span>{data.convertedDay}</span>,
                 </>
             ]);
         }
@@ -53,7 +53,6 @@ function CustomTimeInput(props) {
 
     function sendDateTime(date, time) {
         let string = `${date} ${time}`
-
         props.handleChange(string);
     }
 

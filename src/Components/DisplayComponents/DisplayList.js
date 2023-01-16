@@ -7,7 +7,7 @@ function DisplayList(props) {
     const [allTimezones, setAllTimezones] = useState([]);
     const [dateObj, setDateObj] = useState({});
     const [currentTime, setCurrentTime] = useState(new Date());
-
+    
     // First, fetch full list of timezones
     useEffect(() => {
         fetch('https://worldtimeapi.org/api/timezone/').then(
