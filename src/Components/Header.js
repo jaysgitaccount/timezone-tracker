@@ -8,7 +8,7 @@ function Header() {
             </h1>
             <div>
                 <p>
-                    Have you ever found yourself thinking, <i>"I wish I knew what time it was in (insert country here), so I know when I can (insert time-dependent activity here)"</i>? Well, now you don't have to! Using this timezone tracker, you can add and compare timezones to your heart's content.
+                    Have you ever found yourself thinking, <i>"I wish I knew what time it was in <span>(insert country here)</span>, so I know when I can <span>(insert time-dependent activity here)</span>"</i>? Well, now you don't have to! Using this timezone tracker, you can add and compare timezones to your heart's content.
                 </p>
                 <p>
                     To get started, simply select a timezone from the list below.
