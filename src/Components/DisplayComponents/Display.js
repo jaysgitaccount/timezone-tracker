@@ -44,10 +44,9 @@ let inputOptions = function(targetTimezone){
  */
 function convertDate (string, optionsObj) {
     // Converting to ms and back gives us commas in the result
+
     let timeMs = Date.parse(string);
-
     let customDate = new Date(timeMs);
-
     let convertedDate = customDate.toLocaleString('en-AU', optionsObj);
 
     return convertedDate;
@@ -167,7 +166,7 @@ function Display(props) {
         } = dateObj;
 
         let localTimezone = props.timezone;
-        let externalDate = `${date} ${utcOffset}`
+        let externalDate = `${date}${utcOffset}`
 
         // Extract and format information for display
         let [originalDay, originalDate, originalTime] = convertDate(externalDate, inputOptions(timezone)).split(', ');

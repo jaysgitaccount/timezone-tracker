@@ -52,7 +52,8 @@ function CustomTimeInput(props) {
     }
 
     function sendDateTime(date, time) {
-        let string = `${date} ${time}`
+        let string = `${date}T${time}`
+
         props.handleChange(string);
     }
 
@@ -65,7 +66,8 @@ function CustomTimeInput(props) {
                 id="time"
                 name="time"
                 value={props.data.convertedTime}
-                onChange={handleTimeChange}></input>
+                onChange={handleTimeChange}
+                required></input>
             <label htmlFor="date">
                 {label[1]}
             </label>
@@ -73,7 +75,8 @@ function CustomTimeInput(props) {
                 id="date"
                 name="date"
                 value={reformatDate(props.data.convertedDate)}
-                onChange={handleDateChange}></input>
+                onChange={handleDateChange}
+                required></input>
             
         </div>
     )
