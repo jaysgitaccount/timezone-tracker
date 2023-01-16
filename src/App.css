@@ -24,7 +24,7 @@ body {
   background-color: var(--bg-color);
 }
 
-h1, h2, h3 {
+h1, h2 {
   margin: 0;
   text-transform: capitalize;
 }
@@ -206,7 +206,7 @@ footer p {
   font-weight: 600;
 }
 
-.Display h3 {
+.Display h2 {
   font-size: 1.2rem;
   text-decoration: underline var(--pale-green);
 }

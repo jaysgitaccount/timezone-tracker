@@ -10,7 +10,6 @@ function Main() {
             </div>
 
             <section className="Main">
-                <h2>Timezones</h2>
                 <DisplayList />
             </section>
 

@@ -1,8 +1,8 @@
 function Timezone(props) {
     return (
-        <h3>
+        <h2>
             {props.timezone}
-        </h3>
+        </h2>
     )
 }
 
