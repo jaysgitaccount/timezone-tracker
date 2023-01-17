@@ -27,19 +27,25 @@ function AddDisplay(props) {
     
         return string;
     }
-    
+
+    function handleSearch(e) {
+        if(props.timezones.includes(e.target.value)) {
+            handleChange(e);
+            // Clear field after adding
+            e.target.value = '';
+        }
+    }
 
     return (
-        <div className="Display">
-            <label htmlFor="timezone-select">Select timezone:</label>
-            <select name="timezone-select" id="timezone-select" onChange={handleChange}>
-                <option value=""></option>
-                {
-                    props.timezones.map( (item, index) =>
+        <div className="Display">    
+            <label htmlFor="timezone-search">Search timezones:</label>
+            <input list="timezone-search-list" name="timezone-search" id="timezone-search" onChange={handleSearch}></input>
+
+            <datalist id="timezone-search-list">
+                {props.timezones.map( (item, index) =>
                         <option key={`${item}${index}`} value={item}>{getLocationStrings(item)}</option>
-                    )
-                }
-            </select>
+                    )}
+            </datalist>
         </div>
     )
 }
