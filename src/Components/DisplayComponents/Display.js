@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import Clock from "./Clock";
 import DigitalTime from "./DigitalTime";
@@ -224,13 +224,13 @@ function Display(props) {
             </div>
         )
     } else {
-        // Show loader
         return (
-            <div>Loading...</div>
+            // Show loader
+            <div className='Display'>
+                    <div className='loader'></div>
+            </div>
         )
     }
-        
-
 }
 
 export default Display;

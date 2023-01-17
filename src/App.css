@@ -11,7 +11,6 @@
   --inactive-grey: rgb(172, 172, 172);
   --border-radius-L: 20px;
   --border-radius-S: 10px;
-  --border-radius-round: 999px;
 }
 
 * {
@@ -216,6 +215,7 @@ footer p {
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
+  min-height: 380px;
   color: var(--main-color);
   font-size: 0.9rem;
   font-weight: 600;
@@ -261,7 +261,7 @@ footer p {
   background-color: white;
 }
 
-.Display>div {
+.Display>div>div {
   margin: 0.1rem auto;
 }
 
@@ -277,7 +277,7 @@ footer p {
   padding: 0;
   border: none;
   background-color: var(--mustard-yellow);
-  border-radius: var(--border-radius-round);
+  border-radius: 50%;
   text-align: center;
 }
 
@@ -324,7 +324,7 @@ footer p {
   position: relative;
   background-color: white;
   border: solid 2px var(--mauve);
-  border-radius: var(--border-radius-round);
+  border-radius: 50%;
   height: 130px;
   width: 130px;
 }
@@ -333,7 +333,7 @@ footer p {
   height: 5px;
   width: 5px;
   background-color: white;
-  border-radius: var(--border-radius-round);
+  border-radius: 50%;
   border: solid 1px var(--mauve);
 }
 
@@ -360,7 +360,7 @@ footer p {
 
 .Clock .ClockHand div {
   height: 50%;
-  border-radius: var(--border-radius-round);
+  border-radius: 20px;
 }
 
 .Clock .ClockHand div:last-child {
@@ -382,5 +382,47 @@ footer p {
   background-color: var(--pale-green);
 }
 
-/* Interactive effects */
+/* Loader */
+.loader,
+.loader::before,
+.loader::after {
+  border-radius: 50%;
+}
 
+.loader {
+  position: relative;
+  border: 1px solid;
+  border-color: var(--mauve) transparent;
+  height: 50px;
+  width: 50px;
+  animation: clockwise 1.3s linear infinite;
+}
+
+.loader::before,
+.loader::after {
+  position: absolute;
+  content: '';
+}
+
+.loader::before {
+  border: 3px solid;
+  border-color: var(--pale-green) transparent;
+  inset: 2px;
+  animation: clockwise 2.6s ease-in-out infinite;
+}
+
+.loader::after {
+  border: 4px solid;
+  border-color: var(--mustard-yellow) var(--light-brown) ;
+  inset: 6px;
+  animation: clockwise 2.6s linear infinite;
+}
+
+@keyframes clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
