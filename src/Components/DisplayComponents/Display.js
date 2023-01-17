@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
 import Clock from "./Clock";
 import DigitalTime from "./DigitalTime";
 import CurrentDate from "./CurrentDate";
@@ -44,7 +45,6 @@ let inputOptions = function(targetTimezone){
  */
 function convertDate (string, optionsObj) {
     // Converting to ms and back gives us commas in the result
-
     let timeMs = Date.parse(string);
     let customDate = new Date(timeMs);
     let convertedDate = customDate.toLocaleString('en-AU', optionsObj);
@@ -133,7 +133,6 @@ function Display(props) {
 
     function handleInput(dateString) {
         // Send CustomtimeInput's value & relevant data to parent
-
         props.handleInput(
             dateString,
             data.utc_offset,
@@ -148,10 +147,13 @@ function Display(props) {
     function convertTime(dateObj) {
         // If no data from DisplayList, create this object
         if (!dateObj || Object.keys(dateObj).length === 0) {
-            let initialDateTime = data.datetime.split('.')[0];
+            // If we have initial date/time, use those.
+            let initialDateTime = data.datetime;
             let convertedInitDate = convertDate(initialDateTime, inputOptions(props.timezone)).split(', ');
+
             let date = convertedInitDate[1];
             let time = convertedInitDate[2];
+
             return {
                 // Initialise the value of the controlled components
                 convertedTime: time,
@@ -187,8 +189,8 @@ function Display(props) {
         }
     }
 
-    // If data has been fetched, initialise display components
     if (data && data.datetime) {
+        // If data has been fetched, initialise display components
         ([displayDay, displayDate, displayTime] = [
             currentTime.split(', ')[0],
             currentTime.split(', ')[1],
@@ -201,7 +203,7 @@ function Display(props) {
         dstOffset = convertSecsToHHMM(data.dst_offset);
 
         return (
-            <div className="Display">
+            <div className='Display' >
                 <Clock time={displayTime} />
                 <DigitalTime time={displayTime} />
                 <DeleteButton onClick={handleDelete}/>
@@ -222,8 +224,13 @@ function Display(props) {
             </div>
         )
     } else {
-        return null;
+        // Show loader
+        return (
+            <div>Loading...</div>
+        )
     }
+        
+
 }
 
 export default Display;
