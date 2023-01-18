@@ -1,12 +1,31 @@
 import Display from "./Display";
 import AddDisplay from "./AddDisplay";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, forwardRef } from 'react';
+import React from "react";
 
-function DisplayList(props) {
+const DisplayRef = forwardRef((props, ref) => {
+    return (
+        <div className='Display' ref={ref}>
+            <Display {...props} />
+        </div>
+    )
+})
+
+const AddDisplayRef = forwardRef((props, ref) => {
+    return (
+        <div className='Display' ref={ref}>
+            <AddDisplay {...props} />
+        </div>
+    )
+})
+
+function DisplayList() {
     const [timezones, setTimezones] = useState([]);
     const [allTimezones, setAllTimezones] = useState([]);
     const [dateObj, setDateObj] = useState({});
     const [currentTime, setCurrentTime] = useState(new Date());
+    const itemRefs = useRef([]);
+    const addDisplayRef = useRef(null);
     
     // First, fetch full list of timezones
     useEffect(() => {
@@ -28,12 +47,21 @@ function DisplayList(props) {
         }
     }, []);
 
+    // When timezones changes, adjust length of itemRefs
+    // Then, add the AddDisplay ref to the array
+    useEffect(() => {
+        let newItemArray = itemRefs.current.slice(0, timezones.length);
+        newItemArray = newItemArray.concat(addDisplayRef.current);
+
+        itemRefs.current = newItemArray;
+    }, [timezones])
+
     function handleAdd(timezone) {
         // Store added timezone in state array with unique id
         if (timezone !== '') {
             let newItem = {
                 location: timezone,
-                id: `${timezone}${Math.round((Math.random()*1000))/100}`
+                id: `${timezone}${Math.round((Math.random()*1000))/100}`,
             }
             setTimezones(timezones.concat(newItem));
         }
@@ -57,18 +85,21 @@ function DisplayList(props) {
 
     return (
         <div className="DisplayList">
-            {timezones.map( item => {
-                return <Display
-                    id={item.id}
-                    key={item.id}
-                    timezone={item.location}
-                    handleDelete={handleDelete}
-                    handleInput={handleInput}
-                    dateObj={dateObj}
-                    currentTime={currentTime} />
-                }
-            )}
-            <AddDisplay handleAdd={handleAdd} timezones={allTimezones} />
+            {timezones.map( (item, i) => {
+                return <DisplayRef
+                ref={el => itemRefs.current[i] = el}
+                id={item.id}
+                key={item.id}
+                timezone={item.location}
+                handleDelete={handleDelete}
+                handleInput={handleInput}
+                dateObj={dateObj}
+                currentTime={currentTime} />
+            })}
+            <AddDisplayRef
+                ref={addDisplayRef}
+                handleAdd={handleAdd}
+                timezones={allTimezones} />
         </div>
     )
 }
