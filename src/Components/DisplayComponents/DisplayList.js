@@ -2,6 +2,8 @@ import Display from "./Display";
 import AddDisplay from "./AddDisplay";
 import { useEffect, useState, useRef, forwardRef } from 'react';
 import React from "react";
+import AnimateList from "../Utils/AnimateList";
+import calculateBoundingBoxes from "../Utils/calculateBoundingBoxes";
 
 const DisplayRef = forwardRef((props, ref) => {
     return (
@@ -48,12 +50,15 @@ function DisplayList() {
     }, []);
 
     // When timezones changes, adjust length of itemRefs
-    // Then, add the AddDisplay ref to the array
     useEffect(() => {
         let newItemArray = itemRefs.current.slice(0, timezones.length);
-        newItemArray = newItemArray.concat(addDisplayRef.current);
-
+        
+        // Then, add the AddDisplay ref to the array
+        newItemArray = newItemArray.concat(createRefObj('AddDisplay', addDisplayRef.current));
+        
         itemRefs.current = newItemArray;
+        // console.log(itemRefs.current)
+         console.log(AnimateList(itemRefs.current))
     }, [timezones])
 
     function handleAdd(timezone) {
@@ -87,7 +92,7 @@ function DisplayList() {
         <div className="DisplayList">
             {timezones.map( (item, i) => {
                 return <DisplayRef
-                ref={el => itemRefs.current[i] = el}
+                ref={el => itemRefs.current[i] = createRefObj(item.id, el)}
                 id={item.id}
                 key={item.id}
                 timezone={item.location}
@@ -102,6 +107,13 @@ function DisplayList() {
                 timezones={allTimezones} />
         </div>
     )
+}
+
+function createRefObj (id, ref) {
+    return {
+        id,
+        ref
+    }
 }
 
 export default DisplayList;

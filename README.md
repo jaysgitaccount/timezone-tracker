@@ -31,6 +31,7 @@ My goals for this project:
 - For this project, I used functional components only, because I felt like it would be good to practice them.
 - I need to figure out how to optimise values that don't change every second. Right now, it seems like all data is being recalculated on re-render.
 - Important to remember: when sending inputs like I did in `CustomTimeInput.js`, you need to pass the state values into the function to send them, otherwise you will be sending an older version of the state (same principle as `setState( previous => previous + 1 )`)
+- I used [this article](https://medium.com/ft-product-technology/animating-list-reordering-with-react-hooks-1aa0d78a24dc) to learn how to do the list animations. I had to change the code to account for `Display` being a functional component.
 
 ## Timezone notes
 - So far, I've learned that getting time in ms from `data.datetime` within `Display.js` is actually giving me a value that's affected by DST, which is technically incorrect! However, as this is the display time, I'm ok with it, because I expect users to be "thinking" in the current time of that specific timezone, not the standard UTC time.
