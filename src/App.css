@@ -38,6 +38,10 @@ a:hover {
   color: var(--light-brown);
 }
 
+li {
+  list-style: none;
+}
+
 .App {
   height: 100vh;
   text-align: center;
@@ -219,6 +223,7 @@ footer p {
   color: var(--main-color);
   font-size: 0.9rem;
   font-weight: 600;
+  height: 100%;
 }
 
 .Display h2 {

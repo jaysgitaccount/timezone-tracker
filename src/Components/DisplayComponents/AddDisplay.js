@@ -37,7 +37,7 @@ function AddDisplay(props) {
     }
 
     return (
-        <div className="Display">    
+        <>    
             <label htmlFor="timezone-search">Search timezones:</label>
             <input list="timezone-search-list" name="timezone-search" id="timezone-search" onChange={handleSearch}></input>
 
@@ -46,7 +46,7 @@ function AddDisplay(props) {
                         <option key={`${item}${index}`} value={item}>{getLocationStrings(item)}</option>
                     )}
             </datalist>
-        </div>
+        </>
     )
 }
 

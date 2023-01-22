@@ -1,8 +1,9 @@
 import Display from "./Display";
 import AddDisplay from "./AddDisplay";
 import { useEffect, useState } from 'react';
+import { Reorder, AnimatePresence, addScaleCorrector } from "framer-motion";
 
-function DisplayList(props) {
+function DisplayList() {
     const [timezones, setTimezones] = useState([]);
     const [allTimezones, setAllTimezones] = useState([]);
     const [dateObj, setDateObj] = useState({});
@@ -56,20 +57,43 @@ function DisplayList(props) {
     }
 
     return (
-        <div className="DisplayList">
-            {timezones.map( item => {
-                return <Display
-                    id={item.id}
-                    key={item.id}
-                    timezone={item.location}
-                    handleDelete={handleDelete}
-                    handleInput={handleInput}
-                    dateObj={dateObj}
-                    currentTime={currentTime} />
-                }
-            )}
-            <AddDisplay handleAdd={handleAdd} timezones={allTimezones} />
-        </div>
+        <Reorder.Group className="DisplayList"
+            as="div"
+            values={timezones}
+        >
+            <AnimatePresence>
+
+                {timezones.map( (item) => {
+                    return <Reorder.Item key={item.id+item.id} dragListener={false}
+                    className="Display" 
+                    initial={{opacity:0, transform: 'scale(0%)'}}
+                    animate={{opacity:1, transform: 'scale(100%)'}}
+                    exit={{opacity:0, transform: 'scale(0%)'}}
+                    transition={{duration: 0.3}}>
+                        <Display
+                                id={item.id}
+                                timezone={item.location}
+                                handleDelete={handleDelete}
+                                handleInput={handleInput}
+                                dateObj={dateObj}
+                                currentTime={currentTime}
+                            />
+                    </Reorder.Item>
+                })} 
+
+                <Reorder.Item key={'AddDisplay'} dragListener={false}className="Display" 
+                        initial={{opacity:0, transform: 'scale(0%)'}}
+                        animate={{opacity:1, transform: 'scale(100%)'}}
+                        exit={{opacity:0}}
+                        transition={{duration: 0.3}}>
+                        <AddDisplay
+                            handleAdd={handleAdd}
+                            timezones={allTimezones}
+                        />
+                </Reorder.Item>
+
+            </AnimatePresence>
+        </Reorder.Group>
     )
 }
 

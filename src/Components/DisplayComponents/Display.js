@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 import Clock from "./Clock";
 import DigitalTime from "./DigitalTime";
 import CurrentDate from "./CurrentDate";
@@ -203,7 +202,7 @@ function Display(props) {
         dstOffset = convertSecsToHHMM(data.dst_offset);
 
         return (
-            <div className='Display' >
+            <>
                 <Clock time={displayTime} />
                 <DigitalTime time={displayTime} />
                 <DeleteButton onClick={handleDelete}/>
@@ -221,14 +220,14 @@ function Display(props) {
                     initDate={displayDate}
                     handleChange={handleInput}
                     data={convertTime(props.dateObj)} />
-            </div>
+            </>
         )
     } else {
         return (
             // Show loader
-            <div className='Display'>
-                    <div className='loader'></div>
-            </div>
+            <>
+                <div className='loader'></div>
+            </>
         )
     }
 }
