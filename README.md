@@ -3,7 +3,10 @@ My first React project! I used `create-react-app` to set it up.
 
 This single-page web application uses [World Time API](https://worldtimeapi.org/) to display and convert data between info cards. Each of these cards shows timezone information for an available location.
 
-I used ReactJS and World Time API for this project. All other logic was written by me (although I was tempted to use MomentJS towards the end).
+## Technologies used
+- [React](https://reactjs.org/)
+- [World Time API](https://worldtimeapi.org/)
+- [Framer Motion](https://www.framer.com/motion/)
 
 [LIVE DEMO](https://thriving-syrniki-5daa84.netlify.app/)
 
