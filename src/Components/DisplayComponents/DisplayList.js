@@ -1,7 +1,7 @@
 import Display from "./Display";
 import AddDisplay from "./AddDisplay";
 import { useEffect, useState } from 'react';
-import { Reorder, AnimatePresence, addScaleCorrector } from "framer-motion";
+import { Reorder, AnimatePresence } from "framer-motion";
 
 function DisplayList() {
     const [timezones, setTimezones] = useState([]);
