@@ -32,6 +32,7 @@ a {
   color: var(--main-color);
   font-weight: 900;
   text-decoration: underline var(--pale-green);
+  transition: color 0.2s ease;
 }
 
 a:hover {
