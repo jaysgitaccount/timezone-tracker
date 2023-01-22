@@ -64,7 +64,7 @@ function DisplayList() {
             <AnimatePresence>
 
                 {timezones.map( (item) => {
-                    return <Reorder.Item key={item.id+item.id} dragListener={false}
+                    return <Reorder.Item key={item.id} dragListener={false}
                     className="Display" 
                     initial={{opacity:0, transform: 'scale(0%)'}}
                     animate={{opacity:1, transform: 'scale(100%)'}}
