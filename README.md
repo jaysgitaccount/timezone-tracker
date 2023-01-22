@@ -5,9 +5,10 @@ This single-page web application uses [World Time API](https://worldtimeapi.org/
 
 ## Technologies used
 - [React](https://reactjs.org/)
-- [World Time API](https://worldtimeapi.org/)
 - [Framer Motion](https://www.framer.com/motion/)
+- [World Time API](https://worldtimeapi.org/)
 
+## Demo
 [LIVE DEMO](https://thriving-syrniki-5daa84.netlify.app/)
 
 ![TimezoneTracker](https://user-images.githubusercontent.com/93292687/212230187-54a70724-ead9-464a-9cd2-d1b0c610f923.jpg)
@@ -55,3 +56,6 @@ My goals for this project:
 - Through my learnings about the JavaScript `Date` object, I realised that this wasn't as hard as I thought this would be, and that I could ALSO implement the feature to convert any date and any time across all timezones.
 - Very impressed by the power of `toLocaleString()`
 - After doing this, I'm actually quite happy with this app. There are some tweaks that I can make still, but I feel good about the work I've put in and what I've learned from it.
+
+## Credits
+Favicon made using emojis from [Twemoji](https://twemoji.twitter.com/)
