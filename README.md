@@ -1,19 +1,19 @@
 # timezone-tracker
-My first React project! I used `create-react-app` to set it up.
 
-This single-page web application uses [World Time API](https://worldtimeapi.org/) to display and convert data between info cards. Each of these cards shows timezone information for an available location.
+This single-page web application uses [World Time API](https://worldtimeapi.org/) to display and convert data between info cards. Each of these cards shows timezone information for an available location. You can set a time and date on any card to immediately convert it to the equivalent time and date on all other cards.
+
+[LIVE DEMO](https://thriving-syrniki-5daa84.netlify.app/)
+
+![TimezoneTracker_desktop](https://user-images.githubusercontent.com/93292687/213905973-a54de148-0bff-42be-81d4-ab0beb0c66cf.jpg)
 
 ## Technologies used
 - [React](https://reactjs.org/)
 - [Framer Motion](https://www.framer.com/motion/)
 - [World Time API](https://worldtimeapi.org/)
 
-## Demo
-[LIVE DEMO](https://thriving-syrniki-5daa84.netlify.app/)
-
-![TimezoneTracker](https://user-images.githubusercontent.com/93292687/212230187-54a70724-ead9-464a-9cd2-d1b0c610f923.jpg)
-
 ## Pre-project notes
+My first React project! I used `create-react-app` to set it up.
+
 What I intend for this project is to create a convenient way for people who aren't thinking that hard about timezone differences to be able to track the difference in time between locations. This includes whether a location is experiencing DST or not. I've always had problems understanding the time in America or Europe vs my current location, so I'm hoping to clear up some confusion for myself, and also learn React while I'm at it!
 
 I also intend to host this project on Netlify, which I haven't used before.
@@ -58,4 +58,5 @@ My goals for this project:
 - After doing this, I'm actually quite happy with this app. There are some tweaks that I can make still, but I feel good about the work I've put in and what I've learned from it.
 
 ## Credits
-Favicon made using emojis from [Twemoji](https://twemoji.twitter.com/)
+- Favicon made using emojis from [Twemoji](https://twemoji.twitter.com/)
+- Page dividers made using [Shape DividerApp](https://www.shapedivider.app)
