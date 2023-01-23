@@ -58,7 +58,7 @@ li {
 }
 
 .Main {
-  margin: 4rem auto 5rem auto;
+  margin: 3rem auto 4rem auto;
 }
 
 .Main .DisplayList {
@@ -219,7 +219,7 @@ footer p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem;
+  padding: 1rem;
   min-height: 400px;
   color: var(--main-color);
   font-size: 0.9rem;
