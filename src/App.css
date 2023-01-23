@@ -247,6 +247,9 @@ footer p {
 }
 
 .Display input {
+  /* Remove iOS styling */
+  -webkit-appearance: none;
+
   border-radius: var(--border-radius-L);
   border: 2px solid var(--mustard-yellow);
   font-size: 1rem;
