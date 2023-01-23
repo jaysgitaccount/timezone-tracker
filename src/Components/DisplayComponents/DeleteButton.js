@@ -1,6 +1,10 @@
 function DeleteButton(props) {
     return (
-        <button className="delete" onClick={props.onClick}><b>X</b></button>
+        <button className="delete" onClick={props.onClick}>
+            <div className="one">
+                <div className="two"></div>
+            </div>
+        </button>
     )
 }
 

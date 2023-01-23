@@ -270,12 +270,7 @@ footer p {
   background-color: white;
 }
 
-.Display>div>div {
-  margin: 0.1rem auto;
-}
-
 .Display .delete {
-  font-family: 'Fredoka One', 'Fredoka-One';
   font-weight: bold;
   font-size: 1rem;
   position: absolute;
@@ -283,11 +278,14 @@ footer p {
   right: 5px;
   height: 2rem;
   width: 2rem;
-  padding: 0;
+  padding: 0px;
   border: none;
   background-color: var(--mustard-yellow);
   border-radius: 50%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Display .delete:hover {
@@ -391,7 +389,30 @@ footer p {
   background-color: var(--pale-green);
 }
 
+
+/* Delete button X divs */
+
+.Display .delete .one,
+.Display .delete .two {
+  width: 2px;
+  height: 18px;
+  border-radius: 3px;
+  background-color: var(--main-color);
+}
+
+.one {
+  transform: rotate(45deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.two {
+  transform: rotate(90deg);
+}
+
 /* Loader */
+
 .loader,
 .loader::before,
 .loader::after {
