@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function reformatDate(date) {
     if (date) {
@@ -14,7 +14,6 @@ function CustomTimeInput(props) {
     // Receive initial state from date and time of parent
     const [timeInput, setTimeInput] = useState(props.data.convertedTime)
     const [dateInput, setDateInput] = useState(reformatDate(props.data.convertedDate))
-
     const [label, setLabel] = useState(['Pick a time',''])
 
     useEffect(() => {
@@ -24,7 +23,19 @@ function CustomTimeInput(props) {
         if (Object.keys(data).length <= 2) {
             setLabel([
                 <>
-                Pick a time and date: 
+                Pick a time and date to convert: 
+                </>,
+                <>
+                </>
+            ]);
+        } else if (props.data.convertedDate === undefined || props.data.convertedTime === undefined) {
+            setLabel([
+                <>
+                Please enter a valid {
+                    props.data.convertedDate === undefined
+                        ? 'date'
+                        : 'time'
+                }: 
                 </>,
                 <>
                 </>
@@ -32,7 +43,7 @@ function CustomTimeInput(props) {
         } else if (props.data) {
             setLabel([
                 <>
-                When it's <span>{data.originalTime}</span> on <span>{data.originalDay}, {data.originalDate}</span> in <span>{data.originalTimezone}</span>, the time here is
+                <span>{data.originalTime}</span> on <span>{data.originalDay}, {data.originalDate}</span> in <span>{data.originalTimezone}</span> would be
                 </>,
                 <>
                 on <span>{data.convertedDay}</span>,
@@ -77,7 +88,6 @@ function CustomTimeInput(props) {
                 value={reformatDate(props.data.convertedDate)}
                 onChange={handleDateChange}
                 required></input>
-            
         </div>
     )
 }
