@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import getLocationStrings from './Utils/getLocationStrings';
+import convertDate from './Utils/convertDate';
+import convertSecsToHHMM from './Utils/convertSecsToHHMM';
+
 import Clock from "./Clock";
 import DigitalTime from "./DigitalTime";
 import CurrentDate from "./CurrentDate";
@@ -34,65 +38,6 @@ let inputOptions = function(targetTimezone){
         hour: '2-digit',
         minute: '2-digit',
     }
-}
-
-/**
- * 
- * @param {string} string YYYY-MM-DD HH:MM:SS +HH:MM or Day Month Year HH:MM +HH:MM
- * @param {object} optionsObj created from inputOptions or displayOptions
- * @returns date string e.g. 'Saturday, 14/01/2023, 12:16'
- */
-function convertDate (string, optionsObj) {
-    // Converting to ms and back gives us commas in the result
-    let timeMs = Date.parse(string);
-    let customDate = new Date(timeMs);
-    let convertedDate = customDate.toLocaleString('en-AU', optionsObj);
-
-    return convertedDate;
-}
-
-/**
- * 
- * @param {string} timezone from API, e.g. 'Australia/Sydney'
- * @returns string in reverse order e.g. 'Sydney, Australia'
- */
-function getLocationStrings(timezone) {
-    let formattedString = timezone.replaceAll('_', ' ');
-
-    let locationArray = [];
-    formattedString.split('/').forEach( word => {
-        locationArray.push(word);
-    })
-
-    let string = "";
-
-    locationArray.reverse();
-
-    locationArray.forEach( (word, index) => {
-        if (index === 0) {
-            string += word;
-        } else {
-            string += ', ';
-            string += word;
-        }
-    })
-
-    return string;
-}
-
-/**
- * @param {number} seconds an amount in seconds
- * @returns string in format 'HH:MM'
- */
-function convertSecsToHHMM(seconds) {
-    let totalMinutes = (seconds - (seconds % 60)) / 60;
-    let minutes = totalMinutes % 60;
-    let hours = Math.floor(totalMinutes / 60)
-    
-    hours = hours < 10 ? `0${hours}` : hours;
-    minutes = minutes < 10 ? `0${minutes}` : minutes;
-
-    return `${hours}:${minutes}`
 }
 
 function Display(props) {

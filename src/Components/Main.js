@@ -1,4 +1,4 @@
-import DisplayList from "./DisplayComponents/DisplayList";
+import DisplayList from "./DisplayList";
 
 function Main() {
     return (

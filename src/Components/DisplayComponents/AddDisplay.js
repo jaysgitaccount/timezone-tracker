@@ -1,31 +1,8 @@
+import getLocationStrings from "./Utils/getLocationStrings";
+
 function AddDisplay(props) {
     function handleChange(e) {
         props.handleAdd(e.target.value);
-    }
-    
-    // Format names for option list
-    function getLocationStrings(timezone) {
-        let formattedString = timezone.replaceAll('_', ' ');
-        let locationArray = [];
-        
-        formattedString.split('/').forEach( word => {
-            locationArray.push(word);
-        })
-    
-        let string = "";
-
-        locationArray.reverse();
-        
-        locationArray.forEach( (word, index) => {
-            if (index === 0) {
-                string += word;
-            } else {
-                string += ', ';
-                string += word;
-            }
-        })
-    
-        return string;
     }
 
     function handleSearch(e) {

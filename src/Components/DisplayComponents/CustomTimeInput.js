@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-
-function reformatDate(date) {
-    if (date) {
-        // Takes a date string DD/MM/YYYY and returns YYYY-MM-DD
-        let split = date.split('/');
-        let result = `${split[2]}-${split[1]}-${split[0]}`;
-
-        return result;
-    }
-}
+import reformatDate from "./Utils/reformatDate";
 
 function CustomTimeInput(props) {
     // Receive initial state from date and time of parent
@@ -18,9 +9,9 @@ function CustomTimeInput(props) {
 
     useEffect(() => {
         let data = props.data;
-
-        // If full object is not received
+        
         if (Object.keys(data).length <= 2) {
+            // If full object is not received
             setLabel([
                 <>
                 Pick a time and date to convert: 
@@ -29,6 +20,7 @@ function CustomTimeInput(props) {
                 </>
             ]);
         } else if (props.data.convertedDate === undefined || props.data.convertedTime === undefined) {
+            // If invalid date/time is entered
             setLabel([
                 <>
                 Please enter a valid {
