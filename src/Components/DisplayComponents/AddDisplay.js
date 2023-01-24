@@ -1,6 +1,12 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import getLocationStrings from "./Utils/getLocationStrings";
-import { motion } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
+
+// const cornerVariants = {
+//     initial: {
+//         borderR
+//     }
+// }
 
 function AddDisplay(props) {
     const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +82,7 @@ function AddDisplay(props) {
             // If no delay, input won't send
             timerId = setTimeout(() => {
                 setIsOpen(false)
-            }, 100)
+            }, 150)
         }
 
         return () => {
@@ -100,54 +106,85 @@ function AddDisplay(props) {
 
     function handleInput(e) {
         handleSearch(e);
+        console.log(e)
     }
 
     return (
         <>
-            <label htmlFor="timezone-search">Search timezones:</label>
-            <div className="search-wrapper">
-                <motion.input
-                    type="search"
-                    className="search"
-                    autoComplete="off"
-                    value={searchValue}
-                    onFocus={handleFocusIn}
-                    onBlur={handleFocusOut}
-                    onChange={handleSearch}
-                    style={{
-                        backgroundColor: isOpen ? 'var(--pale-green)' : ''
-                    }}
-                />
+            <div className="label-wrapper">
+                <label htmlFor="timezone-search">Search timezones</label>
                 <motion.span
-                    className="arrow"
-                    animate={{ rotate: isOpen ? 180 : 0 }}
+                        className="arrow"
+                        animate={{
+                            rotate: isOpen ? 180 : 0,
+                        }}
+                        transition={{ type: 'spring', mass: 2}}
                 ></motion.span>
             </div>
-            <motion.div
-                className="dropdown-wrapper"
-                animate={{ height: isOpen ? 200 : 0 }}
-            >
-                <motion.ul
-                    className="dropdown"
-                    style={{ display: isOpen ? 'block' : 'none'}}
+            <LayoutGroup>
+                <div className="search-wrapper">
+                    <motion.input
+                        type="search"
+                        className="search"
+                        autoComplete="off"
+                        value={searchValue}
+                        onFocus={handleFocusIn}
+                        onBlur={handleFocusOut}
+                        onChange={handleSearch}
+                        style={{
+                            outline: 'none',
+                            borderColor: isFocused ? 'var(--main-color)' : 'var(--mustard-yellow)',
+                            backgroundColor: isOpen ? 'var(--mustard-yellow)' : '',
+                            borderBottomLeftRadius: isOpen ? '0px' : 'var(--border-radius-L)',
+                            borderBottomRightRadius: isOpen ? '0px' : 'var(--border-radius-L)',
+                        }}
+                    />
+                </div>
+                
+                <motion.div
+                    className="dropdown-wrapper"
+                    animate={{
+                        height: isOpen ? 200 : 0,
+                        opacity: isOpen ? 1 : 0,
+                        borderRadius: 'var(--border-radius-L)',
+                        borderTopLeftRadius: '0px',
+                        borderTopRightRadius: '0px',
+                    }}
+                    style={{
+                        border: isOpen ? '2px solid var(--main-color)' : ''
+                    }}
                 >
-                    {
-                        Object.entries(filteredOptions).map(([value, name]) =>
-                            <li key={value}>
-                                <input
-                                    key={value}
-                                    type="radio"
-                                    id={value}
-                                    value={value}
-                                    onClick={handleInput} />
-                                <label htmlFor={value}>{name}</label>
-                            </li>
-                        )
-                    }
-                </motion.ul>
-            </motion.div>
+                    <motion.ul
+                        className="dropdown"
+                        style={{ display: isOpen ? 'block' : 'none'}}
+                    >
+                        {
+                            Object.entries(filteredOptions).map(([value, name]) =>
+                                <li key={value}>
+                                    <input
+                                        key={value}
+                                        type="radio"
+                                        id={value}
+                                        value={value}
+                                        onClick={handleInput} />
+                                    <label htmlFor={value}>{name}</label>
+                                </li>
+                            )
+                        }
+                    </motion.ul>
+                </motion.div>
+            </LayoutGroup>
         </>
+        
     )
 }
 
 export default AddDisplay;
+
+                {/* <motion.span
+                    className="arrow"
+                    animate={{ 
+                        rotate: isOpen ? 180 : 0,
+                        opacity: isOpen ? 1 : 0,
+                    }}
+                ></motion.span> */}

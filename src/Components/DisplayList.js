@@ -82,7 +82,7 @@ function DisplayList() {
                     })}
                     <motion.div
                         key={'AddDisplay'}
-                        className="Display overflow-hidden"
+                        className="Display overflow-hidden relative"
                         initial={{opacity:0, transform: 'scale(0%)'}}
                         animate={{opacity:1, transform: 'scale(100%)'}}
                         exit={{opacity:0}}
