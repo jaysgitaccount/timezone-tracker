@@ -35,7 +35,9 @@ function CustomTimeInput(props) {
         } else if (props.data) {
             setLabel([
                 <>
-                <span>{data.originalTime}</span> on <span>{data.originalDay}, {data.originalDate}</span> in <span>{data.originalTimezone}</span> would be
+                <span>{data.originalTime}</span> on <span>{data.originalDay}, {data.originalDate}</span>
+                <br />
+                in <span>{data.originalTimezone}</span> would be
                 </>,
                 <>
                 on <span>{data.convertedDay}</span>,
