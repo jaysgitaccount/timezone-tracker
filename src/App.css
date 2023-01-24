@@ -209,6 +209,10 @@ footer p {
   position: relative;
 }
 
+.overflow-hidden {
+    overflow: hidden;
+}
+
 /* Display UI */
 
 .Display {
@@ -459,11 +463,14 @@ footer p {
 
 /* AddDisplay search dropdown input */
 .search-wrapper {
-  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+}
+
+.search {
+  background-color: none;
 }
 
 .arrow {
@@ -480,11 +487,15 @@ footer p {
   right: 6%;
 }
 
+.dropdown-wrapper {
+  width: 100%;
+}
+
 ul.dropdown {
+  height: 200px;
   margin: 0;
   padding: 0;
   overflow: auto;
-  width: 100%;
 }
 
 ul.dropdown li {
@@ -494,7 +505,6 @@ ul.dropdown li {
 
 ul.dropdown label{
   cursor: pointer;
-  pointer-events: inherit;
 }
 
 input[type="radio"] {

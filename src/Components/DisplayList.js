@@ -1,7 +1,7 @@
 import Display from "./DisplayComponents/Display";
 import AddDisplay from "./DisplayComponents/AddDisplay";
 import { useEffect, useState } from 'react';
-import { Reorder, AnimatePresence } from "framer-motion";
+import { LayoutGroup, AnimatePresence, motion } from "framer-motion";
 
 function DisplayList() {
     const [timezones, setTimezones] = useState([]);
@@ -57,43 +57,46 @@ function DisplayList() {
     }
 
     return (
-        <Reorder.Group className="DisplayList"
-            as="div"
-            values={timezones}
-        >
-            <AnimatePresence>
-
-                {timezones.map( (item) => {
-                    return <Reorder.Item key={item.id} dragListener={false}
-                    className="Display" 
-                    initial={{opacity:0, transform: 'scale(0%)'}}
-                    animate={{opacity:1, transform: 'scale(100%)'}}
-                    exit={{opacity:0, transform: 'scale(0%)'}}
-                    transition={{duration: 0.3}}>
-                        <Display
-                                id={item.id}
-                                timezone={item.location}
-                                handleDelete={handleDelete}
-                                handleInput={handleInput}
-                                dateObj={dateObj}
-                                currentTime={currentTime}
-                            />
-                    </Reorder.Item>
-                })} 
-
-                <Reorder.Item key={'AddDisplay'} dragListener={false}className="Display" 
+        <div className="DisplayList">
+            <LayoutGroup>
+                <AnimatePresence>
+                    {timezones.map((item) => {
+                        return <motion.div
+                            key={item.id}
+                            className="Display"
+                            initial={{opacity:0, transform: 'scale(0%)'}}
+                            animate={{opacity:1, transform: 'scale(100%)'}}
+                            exit={{opacity:0, transform: 'scale(0%)'}}
+                            transition={{duration: 0.3}}
+                            layout
+                        >
+                            <Display
+                                    id={item.id}
+                                    timezone={item.location}
+                                    handleDelete={handleDelete}
+                                    handleInput={handleInput}
+                                    dateObj={dateObj}
+                                    currentTime={currentTime}
+                                />
+                        </motion.div>
+                    })}
+                    <motion.div
+                        key={'AddDisplay'}
+                        className="Display overflow-hidden"
                         initial={{opacity:0, transform: 'scale(0%)'}}
                         animate={{opacity:1, transform: 'scale(100%)'}}
                         exit={{opacity:0}}
-                        transition={{duration: 0.3}}>
+                        transition={{duration: 0.3}}
+                        layout
+                    >
                         <AddDisplay
                             handleAdd={handleAdd}
                             timezones={allTimezones}
                         />
-                </Reorder.Item>
-
-            </AnimatePresence>
-        </Reorder.Group>
+                    </motion.div>
+                </AnimatePresence>
+            </LayoutGroup>
+        </div>
     )
 }
 

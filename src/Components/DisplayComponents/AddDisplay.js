@@ -8,6 +8,7 @@ function AddDisplay(props) {
     const [filteredOptions, setFilteredOptions] = useState({});
     const [searchValue, setSearchValue] = useState('');
     const timezoneValues = useRef({});
+    const dropdown = useRef(null)
 
     const handleSubmit = useCallback((value) => {
         props.handleAdd(value);
@@ -26,7 +27,7 @@ function AddDisplay(props) {
     // Then initialise filteredOptions
     useEffect(() => {
         setFilteredOptions(timezoneValues.current);
-    }, [timezoneValues])
+    }, [timezoneValues.current])
     
     // When search value changes, show filters based on input
     useEffect(() => {
@@ -85,6 +86,7 @@ function AddDisplay(props) {
 
     function handleFocusIn(e) {
         setIsFocused(true);
+
     }
 
     function handleFocusOut(e) {
@@ -121,24 +123,29 @@ function AddDisplay(props) {
                     animate={{ rotate: isOpen ? 180 : 0 }}
                 ></motion.span>
             </div>
-            <motion.ul
-                className="dropdown"
-                animate={{ height: isOpen ? 270 : 0 }}
+            <motion.div
+                className="dropdown-wrapper"
+                animate={{ height: isOpen ? 200 : 0 }}
             >
-                {
-                    Object.entries(filteredOptions).map(([value, name]) =>
-                        <li key={value}>
-                            <input
-                                key={value}
-                                type="radio"
-                                id={value}
-                                value={value}
-                                onClick={handleInput} />
-                            <label htmlFor={value}>{name}</label>
-                        </li>
-                    )
-                }
-            </motion.ul>
+                <motion.ul
+                    className="dropdown"
+                    style={{ display: isOpen ? 'block' : 'none'}}
+                >
+                    {
+                        Object.entries(filteredOptions).map(([value, name]) =>
+                            <li key={value}>
+                                <input
+                                    key={value}
+                                    type="radio"
+                                    id={value}
+                                    value={value}
+                                    onClick={handleInput} />
+                                <label htmlFor={value}>{name}</label>
+                            </li>
+                        )
+                    }
+                </motion.ul>
+            </motion.div>
         </>
     )
 }
