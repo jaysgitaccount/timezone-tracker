@@ -1,33 +1,78 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import getLocationStrings from "./Utils/getLocationStrings";
 import { motion } from "framer-motion";
 
 function AddDisplay(props) {
     const [isOpen, setIsOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-    const [filteredOptions, setFilteredOptions] = useState([]);
-    const searchbar = useRef(null);
-    // Takes list of options as props
-    // Add to dropdown ul as li
-    // Returns functional custom search input with autocomplete dropdown
-    // Features: prompts keyboard on mobile, shows dropdown list, can click on dropdown to submit or finish typing to submit
-    // On click, shows dropdown list
-    // On type, begins filtering according to substring
-    // There's already list options available, can I feed them into here
-    // I think I can use input but NOT datalist as it is broken on Firefox Android
+    const [filteredOptions, setFilteredOptions] = useState({});
+    const [searchValue, setSearchValue] = useState('');
+    const timezoneValues = useRef({});
 
-    // When state isOpen, flip arrow & show menu. If !isOpen, reverse arrow/close
+    const handleSubmit = useCallback((value) => {
+        props.handleAdd(value);
+    }, [props])
 
+    // After receiving full list of timezones, set up values
     useEffect(() => {
-        setFilteredOptions(props.timezones);
+        // Ideally this means you only have to do the string calculations once, at the start
+        let timezonePairs = {};
+        props.timezones.forEach(item => {
+            timezonePairs[item] = getLocationStrings(item);
+        });
+        timezoneValues.current = timezonePairs;
     }, [props.timezones])
 
+    // Then initialise filteredOptions
+    useEffect(() => {
+        setFilteredOptions(timezoneValues.current);
+    }, [timezoneValues])
+    
+    // When search value changes, show filters based on input
+    useEffect(() => {
+        if (searchValue.length > 0) {
+            // If there is any input, search 
+            let allPossibleMatches = Object.entries(timezoneValues.current);
+
+            // Check both value and name for matches
+            // In case input is "Sydney, Austr..."
+            let matches = allPossibleMatches.filter(([value, name]) => 
+                value.includes(searchValue) || name.includes(searchValue)
+            )
+
+            setFilteredOptions(Object.fromEntries(matches));
+        } else if (searchValue.length === 0) {
+            // If search field is empty
+            setFilteredOptions(timezoneValues.current);
+        }
+    }, [searchValue])
+
+    // On search input, check for matches
+    useEffect(() => {
+        let allPossibleMatches = Object.entries(timezoneValues.current);
+
+        // Check both value and name for matches
+        // In case input is "Sydney, Austr..."
+        let match = allPossibleMatches.filter(([value, name]) => 
+            value === searchValue || name === searchValue
+        )
+
+        if (match.length > 0) {
+            let value = match[0][0];
+            handleSubmit(value);
+            // Clear input
+            setSearchValue('');
+        }
+    }, [searchValue, handleSubmit])
+
+    // On focus, trigger menu change
     useEffect(() => {
         let timerId;
 
         if (isFocused) {
             setIsOpen(true);
         } else if (!isFocused) {
+            // If no delay, input won't send
             timerId = setTimeout(() => {
                 setIsOpen(false)
             }, 100)
@@ -38,44 +83,21 @@ function AddDisplay(props) {
         }
     }, [isFocused])
 
-    function handleFocusIn(event) {
+    function handleFocusIn(e) {
         setIsFocused(true);
-        console.log("handle focus in")
     }
 
     function handleFocusOut(e) {
-        console.log("handle focus out")
-        console.log(e);
         setIsFocused(false);
     }
 
-    function handleSubmit(value) {
-        props.handleAdd(value);
-    }
-
     function handleSearch(e) {
-        // User types into bar, search list for matches
-        console.log(e)
-        let value = e.target.value;
-
-        let filteredArray = props.timezones.filter( item => {
-            if (item.includes(value)) {
-                return item;
-            }
-        })
-        setFilteredOptions(filteredArray);
-
-        // If bar value is an option on the list, submit
-        if (props.timezones.includes(value)) {
-            // Reset fields after submitting
-            handleSubmit(value);
-            searchbar.value = "";
-            setFilteredOptions(props.timezones);
-        }
+        // Store input as state
+        setSearchValue(e.target.value);
     }
 
-    function handleInput(event) {
-        handleSearch(event);
+    function handleInput(e) {
+        handleSearch(e);
     }
 
     return (
@@ -83,14 +105,15 @@ function AddDisplay(props) {
             <label htmlFor="timezone-search">Search timezones:</label>
             <div className="search-wrapper">
                 <motion.input
-                    ref={searchbar}
-                    type="text"
+                    type="search"
                     className="search"
+                    autoComplete="off"
+                    value={searchValue}
                     onFocus={handleFocusIn}
                     onBlur={handleFocusOut}
                     onChange={handleSearch}
                     style={{
-                        backgroundColor: isOpen ? 'var(--pale-green)' : 'none'
+                        backgroundColor: isOpen ? 'var(--pale-green)' : ''
                     }}
                 />
                 <motion.span
@@ -102,17 +125,19 @@ function AddDisplay(props) {
                 className="dropdown"
                 animate={{ height: isOpen ? 270 : 0 }}
             >
-                {filteredOptions.map((item) =>
-                    <li key={item}>
-                        <input
-                            key={item}
-                            type="radio"
-                            id={item}
-                            value={item}
-                            onClick={handleInput} />
-                        <label htmlFor={item}>{getLocationStrings(item)}</label>
-                    </li>
-                )}
+                {
+                    Object.entries(filteredOptions).map(([value, name]) =>
+                        <li key={value}>
+                            <input
+                                key={value}
+                                type="radio"
+                                id={value}
+                                value={value}
+                                onClick={handleInput} />
+                            <label htmlFor={value}>{name}</label>
+                        </li>
+                    )
+                }
             </motion.ul>
         </>
     )
