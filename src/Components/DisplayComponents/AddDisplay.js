@@ -38,14 +38,14 @@ function AddDisplay(props) {
     // When search value changes, show filters based on input
     useEffect(() => {
         if (searchValue.length > 0) {
-            let lowercaseValue = searchValue.toLowerCase();
+            let lowercaseValue = searchValue.toLocaleLowerCase();
             // If there is any input, search 
             let allPossibleMatches = Object.entries(timezoneValues.current);
 
             // Check both value and name for matches
             // In case input is "Sydney, Austr..."
             let matches = allPossibleMatches.filter(([value, name]) => 
-                value.toLowerCase().includes(lowercaseValue) || name.toLowerCase().includes(lowercaseValue)
+                value.toLocaleLowerCase().includes(lowercaseValue) || name.toLocaleLowerCase().includes(lowercaseValue)
             )
 
             setFilteredOptions(Object.fromEntries(matches));
@@ -57,13 +57,13 @@ function AddDisplay(props) {
 
     // On search input, check for matches
     useEffect(() => {
-        let lowercaseValue = searchValue.toLowerCase();
+        let lowercaseValue = searchValue.toLocaleLowerCase();
         let allPossibleMatches = Object.entries(timezoneValues.current);
 
         // Check both value and name for matches
         // In case input is "Sydney, Austr..."
         let match = allPossibleMatches.filter(([value, name]) => 
-            value.toLowerCase() === lowercaseValue || name.toLowerCase() === lowercaseValue
+            value.toLocaleLowerCase() === lowercaseValue || name.toLocaleLowerCase() === lowercaseValue
         )
 
         if (match.length > 0) {
