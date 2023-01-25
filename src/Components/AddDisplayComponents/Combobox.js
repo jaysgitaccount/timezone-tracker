@@ -26,42 +26,41 @@ function Combobox(props) {
         setIsFocused(false);
     }
 
-    function handleSearch(value) {
-        props.handleSearch(value);
+    function handleSearch(e) {
+        props.handleSearch(e.target.value);
     }
 
     function handleInput(value) {
-        // console.log(value)
         props.handleInput(value);
         setIsOpen(false);
     }
 
-    // function handleKeyPress(e) {
-    //     const ENTER_KEY_CODE = 13;
-    //     const ESCAPE_KEY_CODE = 27;
+    function handleKeyPress(e) {
+        const ENTER_KEY_CODE = 13;
+        const ESCAPE_KEY_CODE = 27;
 
-    //     switch (e.keyCode) {
-    //         case ENTER_KEY_CODE:
-    //             // submit focused input value 
-    //             let targetInput = e.target.querySelector('input');
-    //             let value = targetInput.getAttribute('value');
-    //             props.handleSearch(value);
-    //             break;
-    //         case ESCAPE_KEY_CODE:
-    //             // clear searchValue
-    //             props.clearSearchValue();
-    //             break;
-    //         default:
-    //             return;
-    //     }
-    // }
+        switch (e.keyCode) {
+            case ENTER_KEY_CODE:
+                // submit focused input value 
+                let targetInput = e.target.querySelector('input');
+                let value = targetInput.getAttribute('value');
+                props.handleSearch(value);
+                break;
+            case ESCAPE_KEY_CODE:
+                // clear searchValue
+                props.clearSearchValue();
+                break;
+            default:
+                return;
+        }
+    }
     
     return (
         <div
             ref={listRef}
             onFocus={handleFocusIn}
             onBlur={handleFocusOut}
-            //onKeyDown={handleKeyPress}
+            onKeyDown={handleKeyPress}
         >
             <div className="label-wrapper">
                 <label htmlFor="timezone-search">
@@ -96,9 +95,11 @@ function Combobox(props) {
                         aria-autocomplete="list"
                         aria-controls="dropdown"
                         aria-expanded={ isOpen ? 'true' : 'false' }
-                        // aria-activedescendant={
-                        //     props.filteredOptions[focusedIndex][1]
-                        // }
+                        aria-activedescendant={
+                            props.filteredOptions[focusedIndex]
+                                ? props.filteredOptions[focusedIndex][1]
+                                : ''
+                        }
                     />
                 </div>
                 
@@ -115,6 +116,7 @@ function Combobox(props) {
                         border: isOpen ? '2px solid var(--main-color)' : ''
                     }}
                     role="none"
+                    tabIndex='-1'
                 >
                     <motion.ul
                         id="dropdown"

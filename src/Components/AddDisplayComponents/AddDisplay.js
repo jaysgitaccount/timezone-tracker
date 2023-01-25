@@ -36,8 +36,6 @@ function AddDisplay(props) {
     
     // When search value changes, show filters based on input
     useEffect(() => {
-        console.log(typeof searchValue)
-        console.log(searchValue)
         if (searchValue.length > 0) {
             let lowercaseValue = searchValue.toLocaleLowerCase();
             // If there is any input, search 
