@@ -94,7 +94,6 @@ function AddDisplay(props) {
 
     function handleFocusIn(e) {
         setIsFocused(true);
-
     }
 
     function handleFocusOut(e) {
@@ -119,7 +118,7 @@ function AddDisplay(props) {
                         animate={{
                             rotate: isOpen ? 180 : 0,
                         }}
-                        transition={{ type: 'spring', mass: 2}}
+                        transition={{ type: 'spring', mass: 0.4 }}
                 ></motion.span>
             </div>
             <LayoutGroup>
@@ -159,33 +158,29 @@ function AddDisplay(props) {
                         className="dropdown"
                         style={{ display: isOpen ? 'block' : 'none'}}
                     >
-                        {
-                            Object.entries(filteredOptions).map(([value, name]) =>
-                                <li key={value}>
-                                    <input
-                                        key={value}
-                                        type="radio"
-                                        id={value}
-                                        value={value}
-                                        onClick={handleInput} />
-                                    <label htmlFor={value}>{name}</label>
-                                </li>
-                            )
-                        }
+                        {Object.entries(filteredOptions).map(([value, name], i) =>
+                            <motion.li
+                                key={value}
+                                whileHover={{
+                                    backgroundColor: 'var(--mustard-yellow)',
+                                    outline: '1px solid var(--light-brown)'
+                                }}
+                                tabIndex={i}
+                            >
+                                <input
+                                    key={value}
+                                    type="radio"
+                                    id={value}
+                                    value={value}
+                                    onClick={handleInput} />
+                                <label htmlFor={value}>{name}</label>
+                            </motion.li>
+                        )}
                     </motion.ul>
                 </motion.div>
             </LayoutGroup>
         </>
-        
     )
 }
 
 export default AddDisplay;
-
-                {/* <motion.span
-                    className="arrow"
-                    animate={{ 
-                        rotate: isOpen ? 180 : 0,
-                        opacity: isOpen ? 1 : 0,
-                    }}
-                ></motion.span> */}
