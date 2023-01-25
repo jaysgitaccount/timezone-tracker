@@ -16,7 +16,7 @@ import CustomTimeInput from './CustomTimeInput';
 let displayOptions = function(targetTimezone) {
     return {
         timeZone: targetTimezone,
-        hour12: false,
+        hourCycle: 'h23',
         weekday: 'long',
         year: 'numeric',
         month: 'short',
