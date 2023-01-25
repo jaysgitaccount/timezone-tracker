@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import getLocationStrings from './Utils/getLocationStrings';
-import convertDate from './Utils/convertDate';
-import convertSecsToHHMM from './Utils/convertSecsToHHMM';
+import getLocationStrings from '../../Utils/getLocationStrings';
+import convertDate from '../../Utils/convertDate';
+import convertSecsToHHMM from '../../Utils/convertSecsToHHMM';
 
 import Clock from "./Clock";
 import DigitalTime from "./DigitalTime";

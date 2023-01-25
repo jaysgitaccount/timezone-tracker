@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import reformatDate from "./Utils/reformatDate";
+import reformatDate from "../../Utils/reformatDate";
 
 function CustomTimeInput(props) {
     // Receive initial state from date and time of parent

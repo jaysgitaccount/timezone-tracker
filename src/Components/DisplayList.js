@@ -1,5 +1,5 @@
 import Display from "./DisplayComponents/Display";
-import AddDisplay from "./DisplayComponents/AddDisplay";
+import AddDisplay from "./AddDisplayComponents/AddDisplay";
 import { useEffect, useState } from 'react';
 import { LayoutGroup, AnimatePresence, motion } from "framer-motion";
 
