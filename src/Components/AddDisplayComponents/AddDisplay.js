@@ -36,6 +36,8 @@ function AddDisplay(props) {
     
     // When search value changes, show filters based on input
     useEffect(() => {
+        console.log(typeof searchValue)
+        console.log(searchValue)
         if (searchValue.length > 0) {
             let lowercaseValue = searchValue.toLocaleLowerCase();
             // If there is any input, search 
@@ -73,19 +75,24 @@ function AddDisplay(props) {
         }
     }, [searchValue, handleSubmit])
 
-    function handleSearch(e) {
+    function handleSearch(value) {
         // Store input as state
-        setSearchValue(e.target.value);
+        setSearchValue(value);
     }
 
-    function handleInput(e) {
-        handleSearch(e);
+    function handleInput(value) {
+        handleSearch(value);
     }
 
+    function clearSearchValue() {
+        setSearchValue('');
+    }
+    
     return (
         <Combobox
             handleSearch={handleSearch}
             handleInput={handleInput}
+            clearSearchValue={clearSearchValue}
             searchValue={searchValue}
             filteredOptions={filteredOptions}
         />

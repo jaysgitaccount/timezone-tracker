@@ -9,7 +9,6 @@ function useCyclingFocus(targetRef, listSize, initialFocus = null) {
     const [currentFocus, setCurrentFocus] = useState(initialFocus);
 
     const handleKeyDown = useCallback((e) => {
-        console.log(e.key)
         // Cycle up or down. Start over if outside list bounds
         switch (e.key) {
             case 'ArrowDown':

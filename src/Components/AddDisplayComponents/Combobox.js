@@ -8,7 +8,6 @@ function Combobox(props) {
     const [isFocused, setIsFocused] = useState(false);
     const listRef = useRef(null);
     const [focusedIndex] = useCyclingFocus(listRef.current, props.filteredOptions.length);
-    console.log(focusedIndex)
 
     // On focus change, trigger menu open/close
     useEffect(() => {
@@ -27,12 +26,13 @@ function Combobox(props) {
         setIsFocused(false);
     }
 
-    function handleSearch(e) {
-        props.handleSearch(e);
+    function handleSearch(value) {
+        props.handleSearch(value);
     }
 
-    function handleInput(e) {
-        props.handleInput(e);
+    function handleInput(value) {
+        // console.log(value)
+        props.handleInput(value);
         setIsOpen(false);
     }
 
@@ -42,17 +42,26 @@ function Combobox(props) {
 
     //     switch (e.keyCode) {
     //         case ENTER_KEY_CODE:
-    //             //set
-    //             console.log(e)
+    //             // submit focused input value 
+    //             let targetInput = e.target.querySelector('input');
+    //             let value = targetInput.getAttribute('value');
+    //             props.handleSearch(value);
     //             break;
+    //         case ESCAPE_KEY_CODE:
+    //             // clear searchValue
+    //             props.clearSearchValue();
+    //             break;
+    //         default:
+    //             return;
     //     }
     // }
-
+    
     return (
         <div
             ref={listRef}
             onFocus={handleFocusIn}
             onBlur={handleFocusOut}
+            //onKeyDown={handleKeyPress}
         >
             <div className="label-wrapper">
                 <label htmlFor="timezone-search">
