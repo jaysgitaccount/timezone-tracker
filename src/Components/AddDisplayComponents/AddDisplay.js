@@ -2,12 +2,6 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import getLocationStrings from "../../Utils/getLocationStrings";
 import Combobox from "./Combobox";
 
-// const cornerVariants = {
-//     initial: {
-//         borderR
-//     }
-// }
-
 function AddDisplay(props) {
     // Array with current filtered entries from timezoneValues
     const [filteredOptions, setFilteredOptions] = useState([]);

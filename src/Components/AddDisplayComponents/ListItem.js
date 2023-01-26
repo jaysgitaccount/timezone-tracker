@@ -6,7 +6,7 @@ function ListItem(props) {
 
     useEffect(() => {
         if (props.focus) {
-            // We need to set focus so the dropdown list cycling works
+            // Set focus so the dropdown list cycling works
             ref.current?.focus();
         }
     }, [props.focus])
@@ -14,7 +14,7 @@ function ListItem(props) {
     function handleInput(e) {
         props.handleInput(e);
     }
-    
+
     return (
         <motion.li
             ref={ref}
@@ -23,20 +23,16 @@ function ListItem(props) {
             tabIndex={props.tabIndex}
             role="none"
         >
-            <input
+            <button
                 key={props.value}
-                type="radio"
+                type="button"
                 id={props.name}
                 value={props.value}
                 role={props.role}
                 onClick={handleInput}
-            />
-            <label
-                htmlFor={props.value}
-                value={props.value}
             >
                 {props.name}
-            </label>
+            </button>
         </motion.li>
     )
 }
