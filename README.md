@@ -57,6 +57,12 @@ My goals for this project:
 - Very impressed by the power of `toLocaleString()`
 - After doing this, I'm actually quite happy with this app. There are some tweaks that I can make still, but I feel good about the work I've put in and what I've learned from it.
 
+## Notes from creating custom combobox
+- I tried to use `datalist` to create a combobox, because the select list I was using before was unfeasibly long on mobile and I wanted to have text searching.
+- Found out that Firefox Android is the ONLY modern browser to not support datalist dropdowns (despite caniuse saying that it did). This made the app unusable for Firefox Android users, so I decided to take the opportunity to build a combobox from scratch.
+- To do this, I referred to [w3 ARIA practices](https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-autocomplete-list) to see what features I would need.
+- I borrowed [this custom hook](https://gist.github.com/brookback/945b0064cd9cb2617d138d92d59b3919) because I wanted to learn the thinking behind custom hooks and get familiar with the structure. 
+
 ## Credits
 - Favicon made using emojis from [Twemoji](https://twemoji.twitter.com/)
 - Page dividers made using [Shape DividerApp](https://www.shapedivider.app)
