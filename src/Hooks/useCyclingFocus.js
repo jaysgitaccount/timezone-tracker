@@ -9,9 +9,9 @@ function useCyclingFocus(targetRef, listSize, initialFocus = null) {
     const [currentFocus, setCurrentFocus] = useState(initialFocus);
 
     useEffect(() => {
-        // When list changes (e.g. user types), reset to first item
+        // When list changes (e.g. user types), reset focus
         setCurrentFocus(initialFocus);
-    }, [listSize])
+    }, [listSize, initialFocus])
 
     const handleKeyDown = useCallback((e) => {
         // Cycle up or down. Start over if outside list bounds
@@ -35,6 +35,8 @@ function useCyclingFocus(targetRef, listSize, initialFocus = null) {
                             ? listSize - 1
                             : prev - 1
                 );
+                break;
+            default:
                 break;
         }
     }, [listSize, currentFocus, setCurrentFocus])
