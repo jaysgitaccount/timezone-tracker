@@ -8,6 +8,7 @@ function Combobox(props) {
     const [isFocused, setIsFocused] = useState(false);
     const listRef = useRef(null);
     const [focusedIndex] = useCyclingFocus(listRef.current, props.filteredOptions.length);
+    const searchRef = useRef(null);
 
     // On focus change, trigger menu open/close
     useEffect(() => {
@@ -27,12 +28,19 @@ function Combobox(props) {
     }
 
     function handleSearch(e) {
-        props.handleSearch(e.target.value);
+        // Receive search event, send to parent
+        props.handleSearch(e);
     }
 
-    function handleInput(value) {
-        props.handleInput(value);
+    function handleInput(e) {
+        // Receive list item event, send to parent, close menu
+        props.handleInput(e);
         setIsOpen(false);
+    }
+
+    function focusSearchRef() {
+        // Set focus to search bar so user can type
+        searchRef.current.focus();
     }
 
     function handleKeyPress(e) {
@@ -41,20 +49,20 @@ function Combobox(props) {
 
         switch (e.keyCode) {
             case ENTER_KEY_CODE:
-                // submit focused input value 
-                let targetInput = e.target.querySelector('input');
-                let value = targetInput.getAttribute('value');
-                props.handleSearch(value);
+                // Submit focused input value 
+                props.handleEnter(focusedIndex);
                 break;
             case ESCAPE_KEY_CODE:
-                // clear searchValue
+                // Clear searchValue
                 props.clearSearchValue();
                 break;
             default:
+                // If user types, focus search input
+                focusSearchRef();
                 return;
         }
     }
-    
+
     return (
         <div
             ref={listRef}
@@ -80,6 +88,7 @@ function Combobox(props) {
                         id="timezone-search"
                         type="search"
                         className="search"
+                        ref={searchRef}
                         autoComplete="off"
                         value={props.searchValue}
                         onChange={handleSearch}

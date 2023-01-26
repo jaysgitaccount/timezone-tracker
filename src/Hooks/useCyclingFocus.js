@@ -8,6 +8,11 @@ import { useState, useEffect, useCallback } from "react";
 function useCyclingFocus(targetRef, listSize, initialFocus = null) {
     const [currentFocus, setCurrentFocus] = useState(initialFocus);
 
+    useEffect(() => {
+        // When list changes (e.g. user types), reset to first item
+        setCurrentFocus(0);
+    }, [listSize])
+
     const handleKeyDown = useCallback((e) => {
         // Cycle up or down. Start over if outside list bounds
         switch (e.key) {

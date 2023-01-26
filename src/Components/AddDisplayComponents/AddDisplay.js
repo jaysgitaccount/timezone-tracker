@@ -15,6 +15,7 @@ function AddDisplay(props) {
     // Array from object with value:name pairs
     const timezoneValues = useRef([]);
 
+
     const handleSubmit = useCallback((value) => {
         props.handleAdd(value);
     }, [props])
@@ -66,6 +67,7 @@ function AddDisplay(props) {
         )
 
         if (match.length > 0) {
+            // Get value from array item
             let value = match[0][0];
             handleSubmit(value);
             // Clear input
@@ -73,16 +75,24 @@ function AddDisplay(props) {
         }
     }, [searchValue, handleSubmit])
 
-    function handleSearch(value) {
-        // Store input as state
-        setSearchValue(value);
+    function handleEnter(focusedIndex) {
+        // Receive index from pressing enter on focused list item, set state
+        let submittedValue = filteredOptions[focusedIndex][0];
+        setSearchValue(submittedValue);
     }
 
-    function handleInput(value) {
-        handleSearch(value);
+    function handleSearch(e) {
+        // Receive search input event, set state
+        setSearchValue(e.target.value);
+    }
+
+    function handleInput(e) {
+        // Receive click event, set state
+        setSearchValue(e.target.value);
     }
 
     function clearSearchValue() {
+        // Pressing ESC clears search value
         setSearchValue('');
     }
     
@@ -90,6 +100,7 @@ function AddDisplay(props) {
         <Combobox
             handleSearch={handleSearch}
             handleInput={handleInput}
+            handleEnter={handleEnter}
             clearSearchValue={clearSearchValue}
             searchValue={searchValue}
             filteredOptions={filteredOptions}
