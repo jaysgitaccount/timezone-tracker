@@ -10,7 +10,7 @@ function useCyclingFocus(targetRef, listSize, initialFocus = null) {
 
     useEffect(() => {
         // When list changes (e.g. user types), reset to first item
-        setCurrentFocus(0);
+        setCurrentFocus(initialFocus);
     }, [listSize])
 
     const handleKeyDown = useCallback((e) => {
